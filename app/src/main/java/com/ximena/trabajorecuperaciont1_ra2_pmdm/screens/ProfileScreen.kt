@@ -5,6 +5,6 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 
 @Composable
-fun HomeScreen(navController: NavController) {
-    Text("Pantalla Home")
+fun ProfileScreen(navController: NavController) {
+    Text("Pantalla Perfil")
 }
