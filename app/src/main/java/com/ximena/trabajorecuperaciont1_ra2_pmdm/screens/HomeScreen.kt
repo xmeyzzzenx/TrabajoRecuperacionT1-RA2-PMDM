@@ -1,6 +1,5 @@
 package com.ximena.trabajorecuperaciont1_ra2_pmdm.screens
 
-import android.R
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -30,7 +29,9 @@ fun HomeScreen(navController: NavController) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        LazyColumn {
+        LazyColumn (
+            modifier = Modifier.weight(1f)
+        ){
             items(tareas) { tarea ->
                 TaskCard(tarea)
             }
