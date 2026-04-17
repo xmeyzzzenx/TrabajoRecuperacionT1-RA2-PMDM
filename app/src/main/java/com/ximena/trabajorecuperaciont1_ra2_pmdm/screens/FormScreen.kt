@@ -1,10 +1,25 @@
 package com.ximena.trabajorecuperaciont1_ra2_pmdm.screens
 
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 
 @Composable
 fun FormScreen(navController: NavController) {
-    Text("Pantalla Formulario")
+
+    Column(
+        modifier = Modifier.fillMaxSize().padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        Text("Pantalla Formulario")
+
+        Button(onClick = {
+            navController.popBackStack()
+        }) {
+            Text("Volver")
+        }
+    }
 }

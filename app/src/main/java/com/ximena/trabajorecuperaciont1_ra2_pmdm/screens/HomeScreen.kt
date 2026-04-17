@@ -19,7 +19,7 @@ fun HomeScreen(navController: NavController) {
         Button(onClick = {
             navController.navigate("form")
         }) {
-            Text("Ir a formulario")
+            Text("Ir a Formulario")
         }
 
         Button(onClick = {
