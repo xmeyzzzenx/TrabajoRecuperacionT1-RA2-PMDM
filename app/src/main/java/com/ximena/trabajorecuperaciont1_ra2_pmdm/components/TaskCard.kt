@@ -1,9 +1,23 @@
 package com.ximena.trabajorecuperaciont1_ra2_pmdm.components
 
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.foundation.layout.*
+import androidx.compose.ui.unit.dp
+import com.ximena.trabajorecuperaciont1_ra2_pmdm.model.Task
 
 @Composable
-fun TaskCard() {
-    Text("Card de tarea")
+fun TaskCard(task: Task) {
+
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+    ){
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(text = task.title, style = MaterialTheme.typography.titleMedium)
+            Text(text = task.description)
+        }
+    }
 }
