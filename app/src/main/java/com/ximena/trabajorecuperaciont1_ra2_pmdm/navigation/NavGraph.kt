@@ -37,7 +37,16 @@ fun NavGraph() {
                     icon = {}
                 )
             }
+        },
+
+        floatingActionButton = {
+            FloatingActionButton(onClick = {
+                navController.navigate("form")
+            }) {
+                Text("+")
+            }
         }
+
     ) { padding ->
 
         NavHost(
