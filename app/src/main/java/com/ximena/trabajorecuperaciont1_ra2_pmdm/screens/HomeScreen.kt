@@ -1,6 +1,7 @@
 package com.ximena.trabajorecuperaciont1_ra2_pmdm.screens
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
@@ -21,17 +22,20 @@ fun HomeScreen(navController: NavController) {
     )
 
     Column(
-        modifier = Modifier.fillMaxSize().padding(16.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
     ) {
         Text("Lista de tareas",
             style = MaterialTheme.typography.titleLarge,
-            modifier = Modifier.padding(top = 16.dp))
+            modifier = Modifier.padding(top = 16.dp)
+        )
 
         Spacer(modifier = Modifier.height(16.dp))
 
         LazyColumn (
             modifier = Modifier.weight(1f)
-        ){
+        ) {
             items(tareas) { tarea ->
                 TaskCard(tarea)
             }
@@ -39,16 +43,20 @@ fun HomeScreen(navController: NavController) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        Button(onClick = {
-            navController.navigate("form")
-        }) {
-            Text("Ir a Formulario")
-        }
-
-        Button(onClick = {
-            navController.navigate("profile")
-        }) {
-            Text("Ir a Perfil")
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            Button(onClick = {
+                navController.navigate("form")
+            }) {
+                Text("Ir a Formulario")
+            }
+            Button(onClick = {
+                navController.navigate("profile")
+            }) {
+                Text("Ir a Perfil")
+            }
         }
     }
 }
