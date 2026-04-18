@@ -1,62 +1,92 @@
 package com.ximena.trabajorecuperaciont1_ra2_pmdm.navigation
 
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.foundation.layout.padding
 import androidx.navigation.compose.*
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.unit.dp
 import com.ximena.trabajorecuperaciont1_ra2_pmdm.screens.*
 
 @Composable
 fun NavGraph() {
 
     val navController = rememberNavController()
+    val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
 
-    Scaffold(
-        bottomBar = {
-            NavigationBar {
+    ModalNavigationDrawer(
+        drawerContent = {
+            ModalDrawerSheet {
 
-                NavigationBarItem(
-                    selected = false,
-                    onClick = { navController.navigate("home") },
+                Text("Menú", modifier = Modifier.padding(16.dp))
+
+                NavigationDrawerItem(
                     label = { Text("Home") },
-                    icon = {}
+                    selected = currentRoute == "home",
+                    onClick = { navController.navigate("home")}
                 )
 
-                NavigationBarItem(
-                    selected = false,
-                    onClick = { navController.navigate("form") },
-                    label = { Text("Form") },
-                    icon = {}
+                NavigationDrawerItem(
+                    label = { Text("Formulario") },
+                    selected = currentRoute == "form",
+                    onClick = { navController.navigate("form") }
                 )
 
-                NavigationBarItem(
-                    selected = false,
-                    onClick = { navController.navigate("profile") },
+                NavigationDrawerItem(
                     label = { Text("Perfil") },
-                    icon = {}
+                    selected = currentRoute == "profile",
+                    onClick = { navController.navigate("profile")}
                 )
-            }
-        },
-
-        floatingActionButton = {
-            FloatingActionButton(onClick = {
-                navController.navigate("form")
-            }) {
-                Text("+")
             }
         }
+    ) {
+        Scaffold(
+            bottomBar = {
+                NavigationBar {
 
-    ) { padding ->
+                    NavigationBarItem(
+                        selected = currentRoute == "home",
+                        onClick = { navController.navigate("home") },
+                        label = { Text("Home") },
+                        icon = {}
+                    )
 
-        NavHost(
-            navController = navController,
-            startDestination = "home",
-            modifier = Modifier.padding(padding)
-        ) {
-            composable("home") { HomeScreen(navController) }
-            composable("form") { FormScreen(navController) }
-            composable("profile") { ProfileScreen(navController) }
+                    NavigationBarItem(
+                        selected = currentRoute == "form",
+                        onClick = { navController.navigate("form") },
+                        label = { Text("Form") },
+                        icon = {}
+                    )
+
+                    NavigationBarItem(
+                        selected = currentRoute == "profile",
+                        onClick = { navController.navigate("profile") },
+                        label = { Text("Perfil") },
+                        icon = {}
+                    )
+                }
+            },
+
+            floatingActionButton = {
+                FloatingActionButton(
+                    onClick = { navController.navigate("form")
+                }) {
+                    Text("+")
+                }
+            }
+
+        ) { padding ->
+
+            NavHost(
+                navController = navController,
+                startDestination = "home",
+                modifier = Modifier.padding(padding)
+            ) {
+                composable("home") { HomeScreen(navController) }
+                composable("form") { FormScreen(navController) }
+                composable("profile") { ProfileScreen(navController) }
+            }
         }
     }
 }
