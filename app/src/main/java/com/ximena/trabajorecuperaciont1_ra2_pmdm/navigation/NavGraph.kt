@@ -1,29 +1,53 @@
 package com.ximena.trabajorecuperaciont1_ra2_pmdm.navigation
 
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.compose.*
-import com.ximena.trabajorecuperaciont1_ra2_pmdm.screens.HomeScreen
-import com.ximena.trabajorecuperaciont1_ra2_pmdm.screens.FormScreen
-import com.ximena.trabajorecuperaciont1_ra2_pmdm.screens.ProfileScreen
+import com.ximena.trabajorecuperaciont1_ra2_pmdm.screens.*
 
 @Composable
 fun NavGraph() {
+
     val navController = rememberNavController()
 
-    NavHost(
-        navController = navController,
-        startDestination = "home"
-    ) {
-        composable("home") {
-            HomeScreen(navController)
-        }
+    Scaffold(
+        bottomBar = {
+            NavigationBar {
 
-        composable("form") {
-            FormScreen(navController)
-        }
+                NavigationBarItem(
+                    selected = false,
+                    onClick = { navController.navigate("home") },
+                    label = { Text("Home") },
+                    icon = {}
+                )
 
-        composable("profile") {
-            ProfileScreen(navController)
+                NavigationBarItem(
+                    selected = false,
+                    onClick = { navController.navigate("form") },
+                    label = { Text("Form") },
+                    icon = {}
+                )
+
+                NavigationBarItem(
+                    selected = false,
+                    onClick = { navController.navigate("profile") },
+                    label = { Text("Perfil") },
+                    icon = {}
+                )
+            }
+        }
+    ) { padding ->
+
+        NavHost(
+            navController = navController,
+            startDestination = "home",
+            modifier = Modifier.padding(padding)
+        ) {
+            composable("home") { HomeScreen(navController) }
+            composable("form") { FormScreen(navController) }
+            composable("profile") { ProfileScreen(navController) }
         }
     }
 }
