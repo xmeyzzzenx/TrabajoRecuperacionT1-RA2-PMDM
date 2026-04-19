@@ -4,8 +4,8 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.foundation.layout.padding
-import androidx.navigation.compose.*
 import androidx.compose.runtime.getValue
+import androidx.navigation.compose.*
 import androidx.compose.ui.unit.dp
 import com.ximena.trabajorecuperaciont1_ra2_pmdm.screens.*
 
@@ -13,7 +13,7 @@ import com.ximena.trabajorecuperaciont1_ra2_pmdm.screens.*
 fun NavGraph() {
 
     val navController = rememberNavController()
-    val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
+    val currentRoute by navController.currentBackStackEntryAsState()
 
     ModalNavigationDrawer(
         drawerContent = {
@@ -23,19 +23,19 @@ fun NavGraph() {
 
                 NavigationDrawerItem(
                     label = { Text("Home") },
-                    selected = currentRoute == "home",
+                    selected = currentRoute?.destination?.route == "home",
                     onClick = { navController.navigate("home")}
                 )
 
                 NavigationDrawerItem(
-                    label = { Text("Formulario") },
-                    selected = currentRoute == "form",
+                    label = { Text("Notas") },
+                    selected = currentRoute?.destination?.route == "form",
                     onClick = { navController.navigate("form") }
                 )
 
                 NavigationDrawerItem(
                     label = { Text("Perfil") },
-                    selected = currentRoute == "profile",
+                    selected = currentRoute?.destination?.route == "profile",
                     onClick = { navController.navigate("profile")}
                 )
             }
@@ -46,21 +46,21 @@ fun NavGraph() {
                 NavigationBar {
 
                     NavigationBarItem(
-                        selected = currentRoute == "home",
+                        selected = currentRoute?.destination?.route == "home",
                         onClick = { navController.navigate("home") },
                         label = { Text("Home") },
                         icon = {}
                     )
 
                     NavigationBarItem(
-                        selected = currentRoute == "form",
+                        selected = currentRoute?.destination?.route == "form",
                         onClick = { navController.navigate("form") },
-                        label = { Text("Form") },
+                        label = { Text("Notas") },
                         icon = {}
                     )
 
                     NavigationBarItem(
-                        selected = currentRoute == "profile",
+                        selected = currentRoute?.destination?.route == "profile",
                         onClick = { navController.navigate("profile") },
                         label = { Text("Perfil") },
                         icon = {}

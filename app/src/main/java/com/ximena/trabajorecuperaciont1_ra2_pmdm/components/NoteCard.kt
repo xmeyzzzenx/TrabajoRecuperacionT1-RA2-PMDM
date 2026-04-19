@@ -5,10 +5,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.foundation.layout.*
 import androidx.compose.ui.unit.dp
-import com.ximena.trabajorecuperaciont1_ra2_pmdm.model.Task
+import com.ximena.trabajorecuperaciont1_ra2_pmdm.model.Note
 
 @Composable
-fun TaskCard(task: Task) {
+fun NoteCard(note: Note) {
 
     Card(
         modifier = Modifier
@@ -16,8 +16,13 @@ fun TaskCard(task: Task) {
             .padding(8.dp)
     ){
         Column(modifier = Modifier.padding(16.dp)) {
-            Text(text = task.title, style = MaterialTheme.typography.titleMedium)
-            Text(text = task.description)
+
+            Text(
+                text = note.title,
+                style = MaterialTheme.typography.titleMedium
+            )
+
+            Text(text = note.content)
         }
     }
 }

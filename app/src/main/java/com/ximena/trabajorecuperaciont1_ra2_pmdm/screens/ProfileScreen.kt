@@ -19,7 +19,13 @@ fun ProfileScreen(navController: NavController) {
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.padding(16.dp)
         ){
-            Text("Pantalla Perfil")
+            Text(text = "Perfil",
+                style = MaterialTheme.typography.titleLarge
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Text("Usuario: Ximena")
 
             Spacer(modifier = Modifier.height(16.dp))
 

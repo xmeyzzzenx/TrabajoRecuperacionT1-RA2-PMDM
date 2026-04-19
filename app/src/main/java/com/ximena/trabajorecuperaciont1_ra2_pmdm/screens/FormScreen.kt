@@ -11,8 +11,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun FormScreen(navController: NavController) {
 
-    var titulo by remember { mutableStateOf("") }
-    var descripcion by remember { mutableStateOf("") }
+    var title by remember { mutableStateOf("") }
+    var content by remember { mutableStateOf("") }
 
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
@@ -29,30 +29,33 @@ fun FormScreen(navController: NavController) {
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
 
-            Text("Formulario", style = MaterialTheme.typography.titleLarge)
+            Text(
+                text = "Nueva nota",
+                style = MaterialTheme.typography.titleLarge
+            )
 
             OutlinedTextField(
-                value = titulo,
-                onValueChange = { titulo = it },
+                value = title,
+                onValueChange = { title = it },
                 label = { Text("Título") },
                 modifier = Modifier.fillMaxWidth()
             )
 
             OutlinedTextField(
-                value = descripcion,
-                onValueChange = { descripcion = it },
-                label = { Text("Descripción") },
+                value = content,
+                onValueChange = { content = it },
+                label = { Text("Contenido") },
                 modifier = Modifier.fillMaxWidth()
             )
 
             Button(onClick = {
                 scope.launch {
-                    if (titulo.isBlank() || descripcion.isBlank()) {
+                    if (title.isBlank() || content.isBlank()) {
                         snackbarHostState.showSnackbar("Completa todos los campos")
                     } else {
-                        snackbarHostState.showSnackbar("Tarea guardada correctamente")
-                        titulo = ""
-                        descripcion = ""
+                        snackbarHostState.showSnackbar("Nota guardada correctamente")
+                        title = ""
+                        content = ""
                     }
                 }
             }) {
