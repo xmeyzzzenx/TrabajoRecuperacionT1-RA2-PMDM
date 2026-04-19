@@ -25,14 +25,16 @@ fun HomeScreen(navController: NavController) {
             .fillMaxSize()
             .padding(16.dp),
     ) {
+
         Text(
             text = "Mis notas",
             style = MaterialTheme.typography.titleLarge,
+            modifier = Modifier.padding(top = 16.dp)
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        LazyColumn (
+        LazyColumn(
             modifier = Modifier.weight(1f)
         ) {
             items(notes) { note ->
