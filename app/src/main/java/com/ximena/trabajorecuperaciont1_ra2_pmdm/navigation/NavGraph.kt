@@ -4,8 +4,9 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.foundation.layout.padding
-import androidx.compose.runtime.getValue
 import androidx.navigation.compose.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.*
 import androidx.compose.ui.unit.dp
 import com.ximena.trabajorecuperaciont1_ra2_pmdm.screens.*
 
@@ -13,7 +14,7 @@ import com.ximena.trabajorecuperaciont1_ra2_pmdm.screens.*
 fun NavGraph() {
 
     val navController = rememberNavController()
-    val currentRoute by navController.currentBackStackEntryAsState()
+    val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
 
     ModalNavigationDrawer(
         drawerContent = {
@@ -22,21 +23,21 @@ fun NavGraph() {
                 Text("Menú", modifier = Modifier.padding(16.dp))
 
                 NavigationDrawerItem(
-                    label = { Text("Home") },
-                    selected = currentRoute?.destination?.route == "home",
-                    onClick = { navController.navigate("home")}
+                    label = { Text("🏠 Home") },
+                    selected = currentRoute == "home",
+                    onClick = { navController.navigate("home") }
                 )
 
                 NavigationDrawerItem(
-                    label = { Text("Notas") },
-                    selected = currentRoute?.destination?.route == "form",
+                    label = { Text("📝 Notas") },
+                    selected = currentRoute == "form",
                     onClick = { navController.navigate("form") }
                 )
 
                 NavigationDrawerItem(
-                    label = { Text("Perfil") },
-                    selected = currentRoute?.destination?.route == "profile",
-                    onClick = { navController.navigate("profile")}
+                    label = { Text("👤 Perfil") },
+                    selected = currentRoute == "profile",
+                    onClick = { navController.navigate("profile") }
                 )
             }
         }
@@ -46,33 +47,39 @@ fun NavGraph() {
                 NavigationBar {
 
                     NavigationBarItem(
-                        selected = currentRoute?.destination?.route == "home",
+                        selected = currentRoute == "home",
                         onClick = { navController.navigate("home") },
-                        label = { Text("Home") },
-                        icon = {}
+                        icon = {
+                            Icon(Icons.Default.Home, contentDescription = "Home")
+                        },
+                        label = {}
                     )
 
                     NavigationBarItem(
-                        selected = currentRoute?.destination?.route == "form",
+                        selected = currentRoute == "form",
                         onClick = { navController.navigate("form") },
-                        label = { Text("Notas") },
-                        icon = {}
+                        icon = {
+                            Icon(Icons.Default.Description, contentDescription = "Notas")
+                        },
+                        label = {}
                     )
 
                     NavigationBarItem(
-                        selected = currentRoute?.destination?.route == "profile",
+                        selected = currentRoute == "profile",
                         onClick = { navController.navigate("profile") },
-                        label = { Text("Perfil") },
-                        icon = {}
+                        icon = {
+                            Icon(Icons.Default.Person, contentDescription = "Perfil")
+                        },
+                        label = {}
                     )
                 }
             },
 
             floatingActionButton = {
                 FloatingActionButton(
-                    onClick = { navController.navigate("form")
-                }) {
-                    Text("+")
+                    onClick = { navController.navigate("form") }
+                ) {
+                    Icon(Icons.Default.Add, contentDescription = "Añadir nota")
                 }
             }
 
