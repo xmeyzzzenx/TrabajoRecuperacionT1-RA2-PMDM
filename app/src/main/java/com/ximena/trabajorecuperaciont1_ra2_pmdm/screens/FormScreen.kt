@@ -48,24 +48,30 @@ fun FormScreen(navController: NavController) {
                 modifier = Modifier.fillMaxWidth()
             )
 
-            Button(onClick = {
-                scope.launch {
-                    if (title.isBlank() || content.isBlank()) {
-                        snackbarHostState.showSnackbar("Completa todos los campos")
-                    } else {
-                        snackbarHostState.showSnackbar("Nota guardada correctamente")
-                        title = ""
-                        content = ""
-                    }
-                }
-            }) {
-                Text("Guardar")
-            }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
 
-            Button(onClick = {
-                navController.popBackStack()
-            }) {
-                Text("Volver")
+                Button(onClick = {
+                    scope.launch {
+                        if (title.isBlank() || content.isBlank()) {
+                            snackbarHostState.showSnackbar("Completa todos los campos")
+                        } else {
+                            snackbarHostState.showSnackbar("Nota guardada correctamente")
+                            title = ""
+                            content = ""
+                        }
+                    }
+                }) {
+                    Text("Guardar")
+                }
+
+                Button(onClick = {
+                    navController.popBackStack()
+                }) {
+                    Text("Volver")
+                }
             }
         }
     }
