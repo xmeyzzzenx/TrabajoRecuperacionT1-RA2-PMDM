@@ -18,22 +18,16 @@ fun ProfileScreen(navController: NavController) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.padding(16.dp)
-        ){
-            Text(text = "Perfil",
+        ) {
+
+            Text(
+                text = "Perfil",
                 style = MaterialTheme.typography.titleLarge
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
             Text("Usuario: Ximena")
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Button(onClick = {
-                navController.popBackStack()
-            }) {
-                Text("Volver")
-            }
         }
     }
 }
