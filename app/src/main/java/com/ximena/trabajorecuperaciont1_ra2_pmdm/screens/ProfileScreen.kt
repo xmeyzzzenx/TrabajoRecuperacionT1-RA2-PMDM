@@ -11,23 +11,24 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun ProfileScreen(navController: NavController) {
 
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.padding(16.dp)
-        ) {
 
-            Text(
-                text = "Perfil",
-                style = MaterialTheme.typography.titleLarge
-            )
+        Text(
+            text = "Perfil",
+            style = MaterialTheme.typography.titleLarge
+        )
 
-            Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(12.dp))
 
-            Text("Usuario: Ximena")
-        }
+        Text(
+            text = "Usuario: Ximena",
+            style = MaterialTheme.typography.bodyLarge
+        )
     }
 }

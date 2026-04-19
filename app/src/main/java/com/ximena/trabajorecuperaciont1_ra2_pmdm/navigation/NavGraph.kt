@@ -65,39 +65,31 @@ fun NavGraph() {
                         IconButton(onClick = {
                             scope.launch { drawerState.open() }
                         }) {
-                            Icon(Icons.Default.Menu, contentDescription = "Menú")
+                            Icon(Icons.Default.Menu, contentDescription = "Abrir menú")
                         }
                     }
                 )
             },
+
             bottomBar = {
                 NavigationBar {
 
                     NavigationBarItem(
                         selected = currentRoute == "home",
                         onClick = { navController.navigate("home") },
-                        icon = {
-                            Icon(Icons.Default.Home, contentDescription = "Home")
-                        },
-                        label = {}
+                        icon = { Icon(Icons.Default.Home, contentDescription = "Home") }
                     )
 
                     NavigationBarItem(
                         selected = currentRoute == "form",
                         onClick = { navController.navigate("form") },
-                        icon = {
-                            Icon(Icons.Default.Description, contentDescription = "Notas")
-                        },
-                        label = {}
+                        icon = { Icon(Icons.Default.Description, contentDescription = "Notas") }
                     )
 
                     NavigationBarItem(
                         selected = currentRoute == "profile",
                         onClick = { navController.navigate("profile") },
-                        icon = {
-                            Icon(Icons.Default.Person, contentDescription = "Perfil")
-                        },
-                        label = {}
+                        icon = { Icon(Icons.Default.Person, contentDescription = "Perfil") }
                     )
                 }
             },
