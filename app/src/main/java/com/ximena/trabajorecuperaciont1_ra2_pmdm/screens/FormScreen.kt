@@ -13,7 +13,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 fun FormScreen(navController: NavController) {
 
     var title by remember { mutableStateOf("") }
-    var content by remember { mutableStateOf("") }
+    var description by remember { mutableStateOf("") }
 
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
@@ -44,41 +44,28 @@ fun FormScreen(navController: NavController) {
             )
 
             OutlinedTextField(
-                value = content,
-                onValueChange = { content = it },
-                label = { Text("Contenido") },
+                value = description,
+                onValueChange = { description = it },
+                label = { Text("Descripción") },
                 modifier = Modifier.fillMaxWidth()
             )
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly
-            ) {
+            Button(
+                onClick = {
 
-                Button(onClick = {
-                    scope.launch {
-                        keyboardController?.hide()
-                        if (title.isBlank() || content.isBlank()) {
-                            snackbarHostState.showSnackbar(
-                                message = "⚠️ Completa todos los campos",
-                                actionLabel = "OK",
-                                duration = SnackbarDuration.Long
-                            )
-                        } else {
-                            snackbarHostState.showSnackbar("✅ Nota guardada correctamente")
-                            title = ""
-                            content = ""
+                    keyboardController?.hide()
+
+                    if (title.isBlank() || description.isBlank()) {
+                        scope.launch {
+                            snackbarHostState.showSnackbar("Completa todos los campos")
                         }
+                    } else {
+                        navController.navigate("home")
                     }
-                }) {
-                    Text("Guardar")
-                }
-
-                Button(onClick = {
-                    navController.popBackStack()
-                }) {
-                    Text("Volver")
-                }
+                },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Guardar")
             }
         }
     }
