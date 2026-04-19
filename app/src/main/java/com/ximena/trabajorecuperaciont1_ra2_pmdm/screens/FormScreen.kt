@@ -7,6 +7,7 @@ import androidx.navigation.NavController
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 
 @Composable
 fun FormScreen(navController: NavController) {
@@ -16,6 +17,7 @@ fun FormScreen(navController: NavController) {
 
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) }
@@ -55,10 +57,15 @@ fun FormScreen(navController: NavController) {
 
                 Button(onClick = {
                     scope.launch {
+                        keyboardController?.hide()
                         if (title.isBlank() || content.isBlank()) {
-                            snackbarHostState.showSnackbar("Completa todos los campos")
+                            snackbarHostState.showSnackbar(
+                                message = "⚠️ Completa todos los campos",
+                                actionLabel = "OK",
+                                duration = SnackbarDuration.Long
+                            )
                         } else {
-                            snackbarHostState.showSnackbar("Nota guardada correctamente")
+                            snackbarHostState.showSnackbar("✅ Nota guardada correctamente")
                             title = ""
                             content = ""
                         }
