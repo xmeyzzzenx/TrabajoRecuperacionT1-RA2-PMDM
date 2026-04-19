@@ -58,10 +58,9 @@ fun NavGraph() {
         }
     ) {
         Scaffold(
-
             topBar = {
                 CenterAlignedTopAppBar(
-                    title = { Text("Notas") },
+                    title = { Text("NoteApp") },
                     navigationIcon = {
                         IconButton(onClick = {
                             scope.launch { drawerState.open() }
@@ -71,7 +70,6 @@ fun NavGraph() {
                     }
                 )
             },
-
             bottomBar = {
                 NavigationBar {
 
@@ -105,10 +103,12 @@ fun NavGraph() {
             },
 
             floatingActionButton = {
-                FloatingActionButton(
-                    onClick = { navController.navigate("form") }
-                ) {
-                    Icon(Icons.Default.Add, contentDescription = "Añadir nota")
+                if (currentRoute == "home") {
+                    FloatingActionButton(
+                        onClick = { navController.navigate("form") }
+                    ) {
+                        Icon(Icons.Default.Add, contentDescription = "Añadir nota")
+                    }
                 }
             }
 
