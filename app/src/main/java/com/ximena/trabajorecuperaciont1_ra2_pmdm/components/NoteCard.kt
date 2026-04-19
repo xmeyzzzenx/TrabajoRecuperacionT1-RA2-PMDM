@@ -14,16 +14,11 @@ fun NoteCard(note: Note) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
-    ){
-        Column(modifier = Modifier.padding(16.dp)) {
-
-            Text(
-                text = note.title,
-                style = MaterialTheme.typography.titleMedium
-            )
-
-            Spacer(modifier = Modifier.height(4.dp))
-
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Text(text = note.title)
             Text(text = note.description)
         }
     }
