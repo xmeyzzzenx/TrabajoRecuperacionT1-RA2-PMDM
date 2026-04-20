@@ -63,12 +63,12 @@ fun NavGraph() {
                 )
 
                 NavigationDrawerItem(
-                    icon = { Icon(Icons.Default.Person, contentDescription = "Perfil") },
-                    label = { Text("Perfil") },
-                    selected = currentRoute == "profile",
+                    icon = { Icon(Icons.Default.Info, contentDescription = "Info") },
+                    label = { Text("Info") },
+                    selected = currentRoute == "info",
                     onClick = {
                         scope.launch { drawerState.close() }
-                        navigate("profile")
+                        navigate("info")
                     }
                 )
             }
@@ -111,9 +111,9 @@ fun NavGraph() {
                     )
 
                     NavigationBarItem(
-                        selected = currentRoute == "profile",
-                        onClick = { navigate("profile") },
-                        icon = { Icon(Icons.Default.Person, contentDescription = "Perfil") },
+                        selected = currentRoute == "info",
+                        onClick = { navigate("info") },
+                        icon = { Icon(Icons.Default.Info, contentDescription = "Info") },
                         colors = navItemColors
                     )
                 }
@@ -139,7 +139,9 @@ fun NavGraph() {
             ) {
                 composable("home") { HomeScreen(navController) }
                 composable("form") { FormScreen(navController) }
-                composable("profile") { ProfileScreen(navController) }
+
+                composable("info") { InfoScreen(navController) }
+
                 composable("detail") { DetailScreen(navController) }
             }
         }

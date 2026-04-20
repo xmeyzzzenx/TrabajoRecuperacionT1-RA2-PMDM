@@ -8,10 +8,10 @@ import androidx.navigation.NavController
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Info
 
 @Composable
-fun ProfileScreen(navController: NavController) {
+fun InfoScreen(navController: NavController) {
 
     Column(
         modifier = Modifier
@@ -28,6 +28,7 @@ fun ProfileScreen(navController: NavController) {
                 containerColor = MaterialTheme.colorScheme.secondary
             )
         ) {
+
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -36,8 +37,8 @@ fun ProfileScreen(navController: NavController) {
             ) {
 
                 Icon(
-                    imageVector = Icons.Default.Person,
-                    contentDescription = "Perfil",
+                    imageVector = Icons.Default.Info,
+                    contentDescription = "Información",
                     modifier = Modifier.size(60.dp),
                     tint = MaterialTheme.colorScheme.primary
                 )
@@ -45,7 +46,7 @@ fun ProfileScreen(navController: NavController) {
                 Spacer(modifier = Modifier.height(12.dp))
 
                 Text(
-                    text = "Perfil",
+                    text = "NoteApp",
                     style = MaterialTheme.typography.titleLarge
                 )
 
@@ -53,17 +54,24 @@ fun ProfileScreen(navController: NavController) {
 
                 Divider()
 
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(12.dp))
 
                 Text(
-                    text = "Usuario: Ximena",
+                    text = "Aplicación para gestionar notas creada con Jetpack Compose.",
                     style = MaterialTheme.typography.bodyLarge
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                Text(
+                    text = "Autor: Ximena Meyzen",
+                    style = MaterialTheme.typography.bodyMedium
                 )
 
                 Spacer(modifier = Modifier.height(4.dp))
 
                 Text(
-                    text = "ximena@gmail.com",
+                    text = "Versión 1.0",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )

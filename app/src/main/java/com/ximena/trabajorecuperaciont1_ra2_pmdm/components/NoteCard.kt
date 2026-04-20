@@ -56,7 +56,6 @@ fun NoteCard(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
 
-                // 👁 VER (igual estilo que editar)
                 OutlinedButton(
                     onClick = {
                         NoteRepository.selectedNote = note
@@ -73,7 +72,6 @@ fun NoteCard(
                     Text("Ver")
                 }
 
-                // ✏️ EDITAR
                 OutlinedButton(
                     onClick = onEdit,
                     border = BorderStroke(
@@ -87,7 +85,6 @@ fun NoteCard(
                     Text("Editar")
                 }
 
-                // ❌ ELIMINAR
                 TextButton(
                     onClick = onDelete,
                     colors = ButtonDefaults.textButtonColors(
