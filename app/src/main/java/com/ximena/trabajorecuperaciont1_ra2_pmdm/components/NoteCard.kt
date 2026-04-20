@@ -19,7 +19,7 @@ fun NoteCard(
         containerColor = MaterialTheme.colorScheme.secondaryContainer
     )
 
-    Card(
+    ElevatedCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 8.dp, vertical = 6.dp),
