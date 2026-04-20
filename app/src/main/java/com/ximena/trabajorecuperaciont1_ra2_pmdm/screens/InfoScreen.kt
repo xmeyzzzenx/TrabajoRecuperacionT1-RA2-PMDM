@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.ui.text.style.TextAlign
 
 @Composable
 fun InfoScreen(navController: NavController) {
@@ -46,7 +47,7 @@ fun InfoScreen(navController: NavController) {
                 Spacer(modifier = Modifier.height(12.dp))
 
                 Text(
-                    text = "NoteApp",
+                    text = "Info",
                     style = MaterialTheme.typography.titleLarge
                 )
 
@@ -57,8 +58,17 @@ fun InfoScreen(navController: NavController) {
                 Spacer(modifier = Modifier.height(12.dp))
 
                 Text(
-                    text = "Aplicación para gestionar notas creada con Jetpack Compose.",
-                    style = MaterialTheme.typography.bodyLarge
+                    text = "NoteApp es una aplicación para gestionar notas creada con Jetpack Compose.",
+                    style = MaterialTheme.typography.bodyLarge,
+                    textAlign = TextAlign.Center
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Text(
+                    text = "Permite crear, editar y eliminar notas de forma sencilla, ayudándote a organizar tus ideas en el día a día.",
+                    style = MaterialTheme.typography.bodyMedium,
+                    textAlign = TextAlign.Center
                 )
 
                 Spacer(modifier = Modifier.height(12.dp))

@@ -6,6 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.foundation.layout.*
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.navigation.NavController
 import com.ximena.trabajorecuperaciont1_ra2_pmdm.model.Note
@@ -35,7 +36,7 @@ fun NoteCard(
 
             Text(
                 text = note.title,
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.titleLarge,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
@@ -44,7 +45,7 @@ fun NoteCard(
 
             Text(
                 text = note.description,
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.bodyLarge,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis
             )
