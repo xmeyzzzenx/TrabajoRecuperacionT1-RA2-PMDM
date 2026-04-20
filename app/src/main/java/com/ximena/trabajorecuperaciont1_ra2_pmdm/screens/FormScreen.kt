@@ -14,8 +14,10 @@ import com.ximena.trabajorecuperaciont1_ra2_pmdm.model.Note
 @Composable
 fun FormScreen(navController: NavController) {
 
-    var title by remember { mutableStateOf("") }
-    var description by remember { mutableStateOf("") }
+    val existingNote = NoteRepository.selectedNote
+
+    var title by remember { mutableStateOf(existingNote?.title ?: "") }
+    var description by remember { mutableStateOf(existingNote?.description ?: "") }
 
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
@@ -34,7 +36,7 @@ fun FormScreen(navController: NavController) {
         ) {
 
             Text(
-                text = "Nueva nota",
+                text = if (existingNote != null) "Editar nota" else "Nueva nota",
                 style = MaterialTheme.typography.titleLarge
             )
 
@@ -61,12 +63,20 @@ fun FormScreen(navController: NavController) {
                             snackbarHostState.showSnackbar("Completa todos los campos")
                         }
                     } else {
-                        // 🔥 GUARDAR NOTA
-                        NoteRepository.notes.add(
-                            Note(title, description)
-                        )
 
-                        // 🔥 NAVEGAR A HOME
+                        if (existingNote != null) {
+                            val index = NoteRepository.notes.indexOf(existingNote)
+                            if (index != -1) {
+                                NoteRepository.notes[index] = Note(title, description)
+                            }
+                        } else {
+                            NoteRepository.notes.add(
+                                Note(title, description)
+                            )
+                        }
+
+                        NoteRepository.selectedNote = null
+
                         navController.navigate("home") {
                             popUpTo("home") { inclusive = true }
                         }
@@ -74,7 +84,7 @@ fun FormScreen(navController: NavController) {
                 },
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Guardar")
+                Text(if (existingNote != null) "Actualizar" else "Guardar")
             }
         }
     }

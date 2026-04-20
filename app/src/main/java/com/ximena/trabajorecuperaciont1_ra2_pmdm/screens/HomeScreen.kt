@@ -37,7 +37,19 @@ fun HomeScreen(navController: NavController) {
                 modifier = Modifier.weight(1f)
             ) {
                 items(notes) { note ->
-                    NoteCard(note)
+
+                    NoteCard(
+                        note = note,
+
+                        onDelete = {
+                            NoteRepository.notes.remove(note)
+                        },
+
+                        onEdit = {
+                            NoteRepository.selectedNote = note
+                            navController.navigate("form")
+                        }
+                    )
                 }
             }
         }
