@@ -1,6 +1,8 @@
 package com.ximena.trabajorecuperaciont1_ra2_pmdm.screens
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.navigation.NavController
@@ -59,7 +61,8 @@ fun FormScreen(navController: NavController) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
-                .padding(16.dp),
+                .padding(16.dp)
+                .verticalScroll(rememberScrollState()), // 🔥 SOLUCIÓN
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
 

@@ -7,11 +7,14 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.navigation.NavController
 import com.ximena.trabajorecuperaciont1_ra2_pmdm.model.Note
+import com.ximena.trabajorecuperaciont1_ra2_pmdm.data.NoteRepository
 
 @Composable
 fun NoteCard(
     note: Note,
+    navController: NavController,
     onDelete: () -> Unit,
     onEdit: () -> Unit
 ) {
@@ -53,7 +56,24 @@ fun NoteCard(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
 
-                // 🔘 EDITAR (Outlined con color del tema)
+                // 👁 VER (igual estilo que editar)
+                OutlinedButton(
+                    onClick = {
+                        NoteRepository.selectedNote = note
+                        navController.navigate("detail")
+                    },
+                    border = BorderStroke(
+                        2.dp,
+                        MaterialTheme.colorScheme.onSurface
+                    ),
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        contentColor = MaterialTheme.colorScheme.onSurface
+                    )
+                ) {
+                    Text("Ver")
+                }
+
+                // ✏️ EDITAR
                 OutlinedButton(
                     onClick = onEdit,
                     border = BorderStroke(
@@ -67,7 +87,7 @@ fun NoteCard(
                     Text("Editar")
                 }
 
-                // ❌ ELIMINAR (rojo)
+                // ❌ ELIMINAR
                 TextButton(
                     onClick = onDelete,
                     colors = ButtonDefaults.textButtonColors(

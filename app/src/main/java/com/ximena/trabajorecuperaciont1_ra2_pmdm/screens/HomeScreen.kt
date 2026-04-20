@@ -53,6 +53,7 @@ fun HomeScreen(navController: NavController) {
 
                     NoteCard(
                         note = note,
+                        navController = navController,
                         onDelete = { NoteRepository.notes.remove(note) },
                         onEdit = {
                             NoteRepository.selectedNote = note

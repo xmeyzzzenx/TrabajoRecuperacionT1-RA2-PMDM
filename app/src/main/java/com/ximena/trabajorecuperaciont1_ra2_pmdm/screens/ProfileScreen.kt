@@ -35,7 +35,6 @@ fun ProfileScreen(navController: NavController) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
-                // 👤 ICONO PERFIL
                 Icon(
                     imageVector = Icons.Default.Person,
                     contentDescription = "Perfil",

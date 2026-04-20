@@ -43,9 +43,7 @@ fun NavGraph() {
                 )
 
                 NavigationDrawerItem(
-                    icon = {
-                        Icon(Icons.Default.Home, contentDescription = "Inicio")
-                    },
+                    icon = { Icon(Icons.Default.Home, contentDescription = "Inicio") },
                     label = { Text("Inicio") },
                     selected = currentRoute == "home",
                     onClick = {
@@ -55,9 +53,7 @@ fun NavGraph() {
                 )
 
                 NavigationDrawerItem(
-                    icon = {
-                        Icon(Icons.Default.Description, contentDescription = "Notas")
-                    },
+                    icon = { Icon(Icons.Default.Description, contentDescription = "Notas") },
                     label = { Text("Notas") },
                     selected = currentRoute == "form",
                     onClick = {
@@ -67,9 +63,7 @@ fun NavGraph() {
                 )
 
                 NavigationDrawerItem(
-                    icon = {
-                        Icon(Icons.Default.Person, contentDescription = "Perfil")
-                    },
+                    icon = { Icon(Icons.Default.Person, contentDescription = "Perfil") },
                     label = { Text("Perfil") },
                     selected = currentRoute == "profile",
                     onClick = {
@@ -105,27 +99,21 @@ fun NavGraph() {
                     NavigationBarItem(
                         selected = currentRoute == "home",
                         onClick = { navigate("home") },
-                        icon = {
-                            Icon(Icons.Default.Home, contentDescription = "Inicio")
-                        },
+                        icon = { Icon(Icons.Default.Home, contentDescription = "Inicio") },
                         colors = navItemColors
                     )
 
                     NavigationBarItem(
                         selected = currentRoute == "form",
                         onClick = { navigate("form") },
-                        icon = {
-                            Icon(Icons.Default.Description, contentDescription = "Notas")
-                        },
+                        icon = { Icon(Icons.Default.Description, contentDescription = "Notas") },
                         colors = navItemColors
                     )
 
                     NavigationBarItem(
                         selected = currentRoute == "profile",
                         onClick = { navigate("profile") },
-                        icon = {
-                            Icon(Icons.Default.Person, contentDescription = "Perfil")
-                        },
+                        icon = { Icon(Icons.Default.Person, contentDescription = "Perfil") },
                         colors = navItemColors
                     )
                 }
@@ -152,6 +140,7 @@ fun NavGraph() {
                 composable("home") { HomeScreen(navController) }
                 composable("form") { FormScreen(navController) }
                 composable("profile") { ProfileScreen(navController) }
+                composable("detail") { DetailScreen(navController) }
             }
         }
     }
