@@ -21,43 +21,68 @@ fun NavGraph() {
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
+    val navItemColors = NavigationBarItemDefaults.colors(
+        indicatorColor = MaterialTheme.colorScheme.secondaryContainer
+    )
+
+    fun navigate(route: String) {
+        navController.navigate(route) {
+            popUpTo("home")
+            launchSingleTop = true
+        }
+    }
+
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet {
 
-                Text("Menú", modifier = Modifier.padding(16.dp))
+                Text(
+                    text = "Menú",
+                    modifier = Modifier.padding(16.dp)
+                )
 
                 NavigationDrawerItem(
-                    label = { Text("🏠 Home") },
+                    icon = {
+                        Icon(Icons.Default.Home, contentDescription = "Inicio")
+                    },
+                    label = { Text("Inicio") },
                     selected = currentRoute == "home",
                     onClick = {
                         scope.launch { drawerState.close() }
-                        navController.navigate("home")
+                        navigate("home")
                     }
                 )
 
                 NavigationDrawerItem(
-                    label = { Text("📝 Notas") },
+                    icon = {
+                        Icon(Icons.Default.Description, contentDescription = "Notas")
+                    },
+                    label = { Text("Notas") },
                     selected = currentRoute == "form",
                     onClick = {
                         scope.launch { drawerState.close() }
-                        navController.navigate("form")
+                        navigate("form")
                     }
                 )
 
                 NavigationDrawerItem(
-                    label = { Text("👤 Perfil") },
+                    icon = {
+                        Icon(Icons.Default.Person, contentDescription = "Perfil")
+                    },
+                    label = { Text("Perfil") },
                     selected = currentRoute == "profile",
                     onClick = {
                         scope.launch { drawerState.close() }
-                        navController.navigate("profile")
+                        navigate("profile")
                     }
                 )
             }
         }
     ) {
+
         Scaffold(
+
             topBar = {
                 CenterAlignedTopAppBar(
                     title = { Text("NoteApp") },
@@ -65,7 +90,10 @@ fun NavGraph() {
                         IconButton(onClick = {
                             scope.launch { drawerState.open() }
                         }) {
-                            Icon(Icons.Default.Menu, contentDescription = "Abrir menú")
+                            Icon(
+                                imageVector = Icons.Default.Menu,
+                                contentDescription = "Abrir menú"
+                            )
                         }
                     }
                 )
@@ -76,20 +104,29 @@ fun NavGraph() {
 
                     NavigationBarItem(
                         selected = currentRoute == "home",
-                        onClick = { navController.navigate("home") },
-                        icon = { Icon(Icons.Default.Home, contentDescription = "Home") }
+                        onClick = { navigate("home") },
+                        icon = {
+                            Icon(Icons.Default.Home, contentDescription = "Inicio")
+                        },
+                        colors = navItemColors
                     )
 
                     NavigationBarItem(
                         selected = currentRoute == "form",
-                        onClick = { navController.navigate("form") },
-                        icon = { Icon(Icons.Default.Description, contentDescription = "Notas") }
+                        onClick = { navigate("form") },
+                        icon = {
+                            Icon(Icons.Default.Description, contentDescription = "Notas")
+                        },
+                        colors = navItemColors
                     )
 
                     NavigationBarItem(
                         selected = currentRoute == "profile",
-                        onClick = { navController.navigate("profile") },
-                        icon = { Icon(Icons.Default.Person, contentDescription = "Perfil") }
+                        onClick = { navigate("profile") },
+                        icon = {
+                            Icon(Icons.Default.Person, contentDescription = "Perfil")
+                        },
+                        colors = navItemColors
                     )
                 }
             },
@@ -97,7 +134,8 @@ fun NavGraph() {
             floatingActionButton = {
                 if (currentRoute == "home") {
                     FloatingActionButton(
-                        onClick = { navController.navigate("form") }
+                        onClick = { navigate("form") },
+                        containerColor = MaterialTheme.colorScheme.secondaryContainer
                     ) {
                         Icon(Icons.Default.Add, contentDescription = "Añadir nota")
                     }

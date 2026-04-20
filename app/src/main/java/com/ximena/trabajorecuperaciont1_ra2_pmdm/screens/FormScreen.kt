@@ -6,8 +6,11 @@ import androidx.compose.runtime.*
 import androidx.navigation.NavController
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.Alignment
 import kotlinx.coroutines.launch
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Warning
 import com.ximena.trabajorecuperaciont1_ra2_pmdm.data.NoteRepository
 import com.ximena.trabajorecuperaciont1_ra2_pmdm.model.Note
 
@@ -24,7 +27,29 @@ fun FormScreen(navController: NavController) {
     val keyboardController = LocalSoftwareKeyboardController.current
 
     Scaffold(
-        snackbarHost = { SnackbarHost(snackbarHostState) }
+        snackbarHost = {
+            SnackbarHost(snackbarHostState) { data ->
+                Snackbar(
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .fillMaxWidth(0.9f),
+                    shape = MaterialTheme.shapes.medium,
+                    containerColor = MaterialTheme.colorScheme.error,
+                    contentColor = MaterialTheme.colorScheme.onError
+                ) {
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Warning,
+                            contentDescription = "Error"
+                        )
+                        Text(data.visuals.message)
+                    }
+                }
+            }
+        }
     ) { padding ->
 
         Column(
@@ -44,6 +69,7 @@ fun FormScreen(navController: NavController) {
                 value = title,
                 onValueChange = { title = it },
                 label = { Text("Título") },
+                singleLine = true,
                 modifier = Modifier.fillMaxWidth()
             )
 
@@ -62,27 +88,30 @@ fun FormScreen(navController: NavController) {
                         scope.launch {
                             snackbarHostState.showSnackbar("Completa todos los campos")
                         }
+                        return@Button
+                    }
+
+                    val newNote = Note(title, description)
+
+                    if (existingNote != null) {
+                        val index = NoteRepository.notes.indexOf(existingNote)
+                        if (index != -1) {
+                            NoteRepository.notes[index] = newNote
+                        }
                     } else {
+                        NoteRepository.notes.add(newNote)
+                    }
 
-                        if (existingNote != null) {
-                            val index = NoteRepository.notes.indexOf(existingNote)
-                            if (index != -1) {
-                                NoteRepository.notes[index] = Note(title, description)
-                            }
-                        } else {
-                            NoteRepository.notes.add(
-                                Note(title, description)
-                            )
-                        }
+                    NoteRepository.selectedNote = null
 
-                        NoteRepository.selectedNote = null
-
-                        navController.navigate("home") {
-                            popUpTo("home") { inclusive = true }
-                        }
+                    navController.navigate("home") {
+                        popUpTo("home") { inclusive = true }
                     }
                 },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.secondaryContainer
+                )
             ) {
                 Text(if (existingNote != null) "Actualizar" else "Guardar")
             }

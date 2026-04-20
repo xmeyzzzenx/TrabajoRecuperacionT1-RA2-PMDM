@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.Alignment
 import com.ximena.trabajorecuperaciont1_ra2_pmdm.components.NoteCard
 import com.ximena.trabajorecuperaciont1_ra2_pmdm.data.NoteRepository
 
@@ -30,21 +31,29 @@ fun HomeScreen(navController: NavController) {
         Spacer(modifier = Modifier.height(16.dp))
 
         if (notes.isEmpty()) {
-            Text("No hay notas todavía")
+
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "No hay notas todavía",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+
         } else {
+
             LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-                modifier = Modifier.weight(1f)
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+                contentPadding = PaddingValues(bottom = 80.dp)
             ) {
                 items(notes) { note ->
 
                     NoteCard(
                         note = note,
-
-                        onDelete = {
-                            NoteRepository.notes.remove(note)
-                        },
-
+                        onDelete = { NoteRepository.notes.remove(note) },
                         onEdit = {
                             NoteRepository.selectedNote = note
                             navController.navigate("form")

@@ -15,36 +15,57 @@ fun NoteCard(
     onEdit: () -> Unit
 ) {
 
+    val buttonColors = ButtonDefaults.buttonColors(
+        containerColor = MaterialTheme.colorScheme.secondaryContainer
+    )
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp)
+            .padding(horizontal = 8.dp, vertical = 6.dp),
+        elevation = CardDefaults.cardElevation(3.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.secondary
+        )
     ) {
         Column(
             modifier = Modifier.padding(16.dp)
         ) {
 
-            Text(text = note.title)
+            Text(
+                text = note.title,
+                style = MaterialTheme.typography.titleMedium
+            )
 
-            Spacer(modifier = Modifier.height(4.dp))
+            Spacer(modifier = Modifier.height(6.dp))
 
-            Text(text = note.description)
+            Text(
+                text = note.description,
+                style = MaterialTheme.typography.bodyMedium,
+                maxLines = 2
+            )
 
             Spacer(modifier = Modifier.height(12.dp))
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(
-                    16.dp,
+                    12.dp,
                     Alignment.CenterHorizontally
                 )
             ) {
 
-                Button(onClick = onEdit) {
+                Button(
+                    onClick = onEdit,
+                    colors = buttonColors
+                ) {
                     Text("Editar")
                 }
 
-                Button(onClick = onDelete) {
+                Button(
+                    onClick = onDelete,
+                    colors = buttonColors
+                ) {
                     Text("Eliminar")
                 }
             }

@@ -4,7 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.runtime.Composable
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import com.ximena.trabajorecuperaciont1_ra2_pmdm.navigation.NavGraph
 import com.ximena.trabajorecuperaciont1_ra2_pmdm.ui.theme.TrabajoRecuperacionT1RA2PMDMTheme
 
@@ -14,13 +15,12 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             TrabajoRecuperacionT1RA2PMDMTheme {
-                MainScreen()
+                Surface(
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    NavGraph()
+                }
             }
         }
     }
-}
-
-@Composable
-fun MainScreen() {
-    NavGraph()
 }
