@@ -22,6 +22,9 @@ fun FormScreen(navController: NavController) {
     var title by remember { mutableStateOf(existingNote?.title ?: "") }
     var description by remember { mutableStateOf(existingNote?.description ?: "") }
 
+    var titleError by remember { mutableStateOf(false) }
+    var descriptionError by remember { mutableStateOf(false) }
+
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -67,16 +70,24 @@ fun FormScreen(navController: NavController) {
 
             OutlinedTextField(
                 value = title,
-                onValueChange = { title = it },
+                onValueChange = {
+                    title = it
+                    titleError = it.isBlank()
+                },
                 label = { Text("Título") },
                 singleLine = true,
+                isError = titleError,
                 modifier = Modifier.fillMaxWidth()
             )
 
             OutlinedTextField(
                 value = description,
-                onValueChange = { description = it },
+                onValueChange = {
+                    description = it
+                    descriptionError = it.isBlank()
+                },
                 label = { Text("Descripción") },
+                isError = descriptionError,
                 modifier = Modifier.fillMaxWidth()
             )
 
@@ -84,7 +95,10 @@ fun FormScreen(navController: NavController) {
                 onClick = {
                     keyboardController?.hide()
 
-                    if (title.isBlank() || description.isBlank()) {
+                    titleError = title.isBlank()
+                    descriptionError = description.isBlank()
+
+                    if (titleError || descriptionError) {
                         scope.launch {
                             snackbarHostState.showSnackbar("Completa todos los campos")
                         }

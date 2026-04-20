@@ -4,8 +4,9 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.foundation.layout.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.dp
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.ui.text.style.TextOverflow
 import com.ximena.trabajorecuperaciont1_ra2_pmdm.model.Note
 
 @Composable
@@ -14,10 +15,6 @@ fun NoteCard(
     onDelete: () -> Unit,
     onEdit: () -> Unit
 ) {
-
-    val buttonColors = ButtonDefaults.buttonColors(
-        containerColor = MaterialTheme.colorScheme.secondaryContainer
-    )
 
     ElevatedCard(
         modifier = Modifier
@@ -28,13 +25,16 @@ fun NoteCard(
             containerColor = MaterialTheme.colorScheme.secondary
         )
     ) {
+
         Column(
             modifier = Modifier.padding(16.dp)
         ) {
 
             Text(
                 text = note.title,
-                style = MaterialTheme.typography.titleMedium
+                style = MaterialTheme.typography.titleMedium,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
 
             Spacer(modifier = Modifier.height(6.dp))
@@ -42,29 +42,37 @@ fun NoteCard(
             Text(
                 text = note.description,
                 style = MaterialTheme.typography.bodyMedium,
-                maxLines = 2
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis
             )
 
             Spacer(modifier = Modifier.height(12.dp))
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(
-                    12.dp,
-                    Alignment.CenterHorizontally
-                )
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
 
-                Button(
+                // 🔘 EDITAR (Outlined con color del tema)
+                OutlinedButton(
                     onClick = onEdit,
-                    colors = buttonColors
+                    border = BorderStroke(
+                        2.dp,
+                        MaterialTheme.colorScheme.onSurface
+                    ),
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        contentColor = MaterialTheme.colorScheme.onSurface
+                    )
                 ) {
                     Text("Editar")
                 }
 
-                Button(
+                // ❌ ELIMINAR (rojo)
+                TextButton(
                     onClick = onDelete,
-                    colors = buttonColors
+                    colors = ButtonDefaults.textButtonColors(
+                        contentColor = MaterialTheme.colorScheme.error
+                    )
                 ) {
                     Text("Eliminar")
                 }
