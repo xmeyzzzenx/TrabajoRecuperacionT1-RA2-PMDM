@@ -8,6 +8,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import com.ximena.trabajorecuperaciont1_ra2_pmdm.data.NoteRepository
+import com.ximena.trabajorecuperaciont1_ra2_pmdm.model.Note
 
 @Composable
 fun FormScreen(navController: NavController) {
@@ -52,7 +54,6 @@ fun FormScreen(navController: NavController) {
 
             Button(
                 onClick = {
-
                     keyboardController?.hide()
 
                     if (title.isBlank() || description.isBlank()) {
@@ -60,7 +61,15 @@ fun FormScreen(navController: NavController) {
                             snackbarHostState.showSnackbar("Completa todos los campos")
                         }
                     } else {
-                        navController.navigate("home")
+                        // 🔥 GUARDAR NOTA
+                        NoteRepository.notes.add(
+                            Note(title, description)
+                        )
+
+                        // 🔥 NAVEGAR A HOME
+                        navController.navigate("home") {
+                            popUpTo("home") { inclusive = true }
+                        }
                     }
                 },
                 modifier = Modifier.fillMaxWidth()

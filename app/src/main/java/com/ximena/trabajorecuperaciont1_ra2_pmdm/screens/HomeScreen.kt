@@ -9,16 +9,12 @@ import androidx.navigation.NavController
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.ximena.trabajorecuperaciont1_ra2_pmdm.components.NoteCard
-import com.ximena.trabajorecuperaciont1_ra2_pmdm.model.Note
+import com.ximena.trabajorecuperaciont1_ra2_pmdm.data.NoteRepository
 
 @Composable
 fun HomeScreen(navController: NavController) {
 
-    val notes = listOf(
-        Note("Proyecto final", "Seguir avanzando la app"),
-        Note("Recuperación PMDM","Ir terminando la app"),
-        Note("Recuperación PSP","Repasar hilos y corrutinas")
-    )
+    val notes = NoteRepository.notes
 
     Column(
         modifier = Modifier
@@ -33,12 +29,16 @@ fun HomeScreen(navController: NavController) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier.weight(1f)
-        ) {
-            items(notes) { note ->
-                NoteCard(note)
+        if (notes.isEmpty()) {
+            Text("No hay notas todavía")
+        } else {
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = Modifier.weight(1f)
+            ) {
+                items(notes) { note ->
+                    NoteCard(note)
+                }
             }
         }
     }
