@@ -11,6 +11,8 @@ import androidx.compose.ui.unit.dp
 import com.ximena.trabajorecuperaciont1_ra2_pmdm.screens.*
 import kotlinx.coroutines.launch
 
+// navegacion principal de la app
+// aqui se define el drawer, la bottom bar y todas las rutas
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NavGraph() {
@@ -21,10 +23,12 @@ fun NavGraph() {
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
+    // colores del indicador de la bottom bar
     val navItemColors = NavigationBarItemDefaults.colors(
         indicatorColor = MaterialTheme.colorScheme.secondaryContainer
     )
 
+    // funcion para navegar sin duplicar pantallas en la pila
     fun navigate(route: String) {
         navController.navigate(route) {
             popUpTo("home")
@@ -32,13 +36,14 @@ fun NavGraph() {
         }
     }
 
+    // drawer lateral con las opciones de navegacion
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet {
 
                 Text(
-                    text = "Menú",
+                    text = "Menu",
                     modifier = Modifier.padding(16.dp)
                 )
 
@@ -53,8 +58,8 @@ fun NavGraph() {
                 )
 
                 NavigationDrawerItem(
-                    icon = { Icon(Icons.Default.Description, contentDescription = "Notas") },
-                    label = { Text("Notas") },
+                    icon = { Icon(Icons.Default.Description, contentDescription = "Tareas") },
+                    label = { Text("Tareas") },
                     selected = currentRoute == "form",
                     onClick = {
                         scope.launch { drawerState.close() }
@@ -78,15 +83,16 @@ fun NavGraph() {
         Scaffold(
 
             topBar = {
+                // barra superior con el nombre de la app y boton para abrir el drawer
                 CenterAlignedTopAppBar(
-                    title = { Text("NoteApp") },
+                    title = { Text("TaskApp") },
                     navigationIcon = {
                         IconButton(onClick = {
                             scope.launch { drawerState.open() }
                         }) {
                             Icon(
                                 imageVector = Icons.Default.Menu,
-                                contentDescription = "Abrir menú"
+                                contentDescription = "Abrir menu"
                             )
                         }
                     }
@@ -94,6 +100,7 @@ fun NavGraph() {
             },
 
             bottomBar = {
+                // barra de navegacion inferior con las tres secciones principales
                 NavigationBar {
 
                     NavigationBarItem(
@@ -106,7 +113,7 @@ fun NavGraph() {
                     NavigationBarItem(
                         selected = currentRoute == "form",
                         onClick = { navigate("form") },
-                        icon = { Icon(Icons.Default.Description, contentDescription = "Notas") },
+                        icon = { Icon(Icons.Default.Description, contentDescription = "Tareas") },
                         colors = navItemColors
                     )
 
@@ -120,18 +127,20 @@ fun NavGraph() {
             },
 
             floatingActionButton = {
+                // boton flotante para añadir tarea, solo visible en la pantalla principal
                 if (currentRoute == "home") {
                     FloatingActionButton(
                         onClick = { navigate("form") },
                         containerColor = MaterialTheme.colorScheme.secondaryContainer
                     ) {
-                        Icon(Icons.Default.Add, contentDescription = "Añadir nota")
+                        Icon(Icons.Default.Add, contentDescription = "Añadir tarea")
                     }
                 }
             }
 
         ) { padding ->
 
+            // rutas de la app
             NavHost(
                 navController = navController,
                 startDestination = "home",
@@ -139,9 +148,7 @@ fun NavGraph() {
             ) {
                 composable("home") { HomeScreen(navController) }
                 composable("form") { FormScreen(navController) }
-
                 composable("info") { InfoScreen(navController) }
-
                 composable("detail") { DetailScreen(navController) }
             }
         }
