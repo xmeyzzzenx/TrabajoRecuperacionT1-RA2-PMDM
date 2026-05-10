@@ -1,3 +1,4 @@
+// Type.kt
 package com.ximena.trabajorecuperaciont1_ra2_pmdm.ui.theme
 
 import androidx.compose.material3.Typography
@@ -5,6 +6,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
+// tipografia de la app, definimos los estilos de texto que usamos
 val Typography = Typography(
 
     titleLarge = TextStyle(

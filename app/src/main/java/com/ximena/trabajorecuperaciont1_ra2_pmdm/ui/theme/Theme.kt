@@ -1,24 +1,24 @@
+// Theme.kt
 package com.ximena.trabajorecuperaciont1_ra2_pmdm.ui.theme
 
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 
+// definimos el esquema de colores claro de la app
 private val LightColorScheme = lightColorScheme(
     primary = Primary,
     secondary = Secondary,
-
     background = Background,
     surface = Surface,
-
     secondaryContainer = Primary,
     onSecondaryContainer = OnPrimary,
-
     onPrimary = OnPrimary,
     onSecondary = OnPrimary,
     onBackground = OnSurface,
     onSurface = OnSurface
 )
 
+// tema principal de la app, aplica colores y tipografia a todo el contenido
 @Composable
 fun TrabajoRecuperacionT1RA2PMDMTheme(
     content: @Composable () -> Unit
