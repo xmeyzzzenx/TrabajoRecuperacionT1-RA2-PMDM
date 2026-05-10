@@ -8,11 +8,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.navigation.NavController
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import com.ximena.trabajorecuperaciont1_ra2_pmdm.data.TaskRepository
 import com.ximena.trabajorecuperaciont1_ra2_pmdm.ui.theme.RedStrike
 
-// pantalla de detalle que muestra toda la informacion de una tarea
+// pantalla de detalle con toda la informacion de una tarea
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailScreen(navController: NavController) {
@@ -24,12 +24,10 @@ fun DetailScreen(navController: NavController) {
             TopAppBar(
                 title = { Text("Detalle de tarea") },
                 navigationIcon = {
-                    // boton para volver a la pantalla anterior
-                    IconButton(onClick = {
-                        navController.popBackStack()
-                    }) {
+                    // flecha para volver a la pantalla anterior
+                    IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
-                            imageVector = Icons.Default.ArrowBack,
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Volver"
                         )
                     }
@@ -46,7 +44,7 @@ fun DetailScreen(navController: NavController) {
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
 
-            // titulo tachado en rojo si esta completada
+            // titulo tachado en rojo vino si la tarea esta completada
             Text(
                 text = task?.title ?: "",
                 style = MaterialTheme.typography.titleLarge,
@@ -60,7 +58,10 @@ fun DetailScreen(navController: NavController) {
                     MaterialTheme.colorScheme.onSurface
             )
 
-            // descripcion tachada en rojo si esta completada
+            // separador visual entre titulo y descripcion
+            HorizontalDivider(color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f))
+
+            // descripcion tachada en rojo vino si la tarea esta completada
             Text(
                 text = task?.description ?: "",
                 style = MaterialTheme.typography.bodyLarge,
@@ -74,7 +75,7 @@ fun DetailScreen(navController: NavController) {
                     MaterialTheme.colorScheme.onSurface
             )
 
-            // etiqueta de estado
+            // etiqueta con el estado de la tarea, cambia de color segun si esta completada o no
             Surface(
                 shape = MaterialTheme.shapes.small,
                 color = if (task?.isCompleted == true)

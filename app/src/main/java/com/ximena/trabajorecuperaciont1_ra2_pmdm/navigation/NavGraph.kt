@@ -8,27 +8,29 @@ import androidx.navigation.compose.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.ui.unit.dp
+import com.ximena.trabajorecuperaciont1_ra2_pmdm.data.TaskRepository
 import com.ximena.trabajorecuperaciont1_ra2_pmdm.screens.*
 import kotlinx.coroutines.launch
 
 // navegacion principal de la app
-// aqui se define el drawer, la bottom bar y todas las rutas
+// aqui se definen el drawer lateral, la bottom bar y todas las rutas
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NavGraph() {
 
     val navController = rememberNavController()
+    // ruta activa para saber que item resaltar en la bottom bar y el drawer
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
 
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
-    // indicador de la bottom bar en gris medio
+    // color del indicador de seleccion en la bottom bar
     val navItemColors = NavigationBarItemDefaults.colors(
         indicatorColor = MaterialTheme.colorScheme.secondaryContainer
     )
 
-    // funcion para navegar sin duplicar pantallas en la pila
+    // evita duplicar pantallas en la pila de navegacion
     fun navigate(route: String) {
         navController.navigate(route) {
             popUpTo("home")
@@ -36,11 +38,11 @@ fun NavGraph() {
         }
     }
 
-    // drawer lateral con las opciones de navegacion
+    // drawer lateral que se abre con el boton de menu
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
-            // forzamos el fondo blanco para que no salga el morado del tema por defecto
+            // fondo blanco para evitar el color por defecto de Material
             ModalDrawerSheet(
                 drawerContainerColor = MaterialTheme.colorScheme.background
             ) {
@@ -60,12 +62,14 @@ fun NavGraph() {
                     }
                 )
 
+                // limpiamos la tarea seleccionada para abrir el formulario vacio
                 NavigationDrawerItem(
                     icon = { Icon(Icons.Default.Description, contentDescription = "Tareas") },
                     label = { Text("Tareas") },
                     selected = currentRoute == "form",
                     onClick = {
                         scope.launch { drawerState.close() }
+                        TaskRepository.selectedTask = null
                         navigate("form")
                     }
                 )
@@ -103,7 +107,7 @@ fun NavGraph() {
             },
 
             bottomBar = {
-                // forzamos el fondo blanco para que no salga el morado del tema por defecto
+                // fondo blanco para evitar el color por defecto de Material
                 NavigationBar(
                     containerColor = MaterialTheme.colorScheme.background
                 ) {
@@ -115,9 +119,13 @@ fun NavGraph() {
                         colors = navItemColors
                     )
 
+                    // limpiamos la tarea seleccionada al navegar al formulario desde la bottom bar
                     NavigationBarItem(
                         selected = currentRoute == "form",
-                        onClick = { navigate("form") },
+                        onClick = {
+                            TaskRepository.selectedTask = null
+                            navigate("form")
+                        },
                         icon = { Icon(Icons.Default.Description, contentDescription = "Tareas") },
                         colors = navItemColors
                     )
@@ -132,10 +140,14 @@ fun NavGraph() {
             },
 
             floatingActionButton = {
-                // boton flotante negro para añadir tarea, solo visible en la pantalla principal
+                // boton + para añadir tarea, solo visible en la pantalla principal
                 if (currentRoute == "home") {
                     FloatingActionButton(
-                        onClick = { navigate("form") },
+                        onClick = {
+                            // limpiamos la tarea seleccionada para abrir el formulario vacio
+                            TaskRepository.selectedTask = null
+                            navigate("form")
+                        },
                         containerColor = MaterialTheme.colorScheme.primary,
                         contentColor = MaterialTheme.colorScheme.onPrimary
                     ) {
@@ -146,7 +158,7 @@ fun NavGraph() {
 
         ) { padding ->
 
-            // rutas de la app
+            // definicion de todas las rutas de la app
             NavHost(
                 navController = navController,
                 startDestination = "home",
@@ -154,7 +166,7 @@ fun NavGraph() {
             ) {
                 composable("home") { HomeScreen(navController) }
                 composable("form") { FormScreen(navController) }
-                composable("info") { InfoScreen(navController) }
+                composable("info") { InfoScreen() }
                 composable("detail") { DetailScreen(navController) }
             }
         }

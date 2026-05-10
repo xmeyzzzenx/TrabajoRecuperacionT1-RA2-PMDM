@@ -17,25 +17,28 @@ import com.ximena.trabajorecuperaciont1_ra2_pmdm.data.TaskRepository
 import com.ximena.trabajorecuperaciont1_ra2_pmdm.model.Task
 
 // formulario para crear o editar una tarea
-// si hay una tarea seleccionada en el repositorio, la cargamos para editarla
+// si hay una tarea seleccionada en el repositorio la cargamos para editarla
 @Composable
 fun FormScreen(navController: NavController) {
 
     val existingTask = TaskRepository.selectedTask
 
+    // si estamos editando cargamos los datos, si no los campos quedan vacios
     var title by remember { mutableStateOf(existingTask?.title ?: "") }
     var description by remember { mutableStateOf(existingTask?.description ?: "") }
 
+    // controlan si los campos tienen error de validacion
     var titleError by remember { mutableStateOf(false) }
     var descriptionError by remember { mutableStateOf(false) }
 
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
+    // oculta el teclado al pulsar guardar
     val keyboardController = LocalSoftwareKeyboardController.current
 
     Scaffold(
         snackbarHost = {
-            // snackbar de error cuando los campos estan vacios
+            // snackbar rojo con icono de warning cuando los campos estan vacios
             SnackbarHost(snackbarHostState) { data ->
                 Snackbar(
                     modifier = Modifier
@@ -75,7 +78,7 @@ fun FormScreen(navController: NavController) {
                 style = MaterialTheme.typography.titleLarge
             )
 
-            // campo de titulo con validacion
+            // campo de titulo, se marca en rojo si esta vacio
             OutlinedTextField(
                 value = title,
                 onValueChange = {
@@ -85,10 +88,13 @@ fun FormScreen(navController: NavController) {
                 label = { Text("Titulo") },
                 singleLine = true,
                 isError = titleError,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                supportingText = {
+                    if (titleError) Text("El titulo no puede estar vacio")
+                }
             )
 
-            // campo de descripcion con validacion
+            // campo de descripcion, se marca en rojo si esta vacio
             OutlinedTextField(
                 value = description,
                 onValueChange = {
@@ -97,10 +103,12 @@ fun FormScreen(navController: NavController) {
                 },
                 label = { Text("Descripcion") },
                 isError = descriptionError,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                supportingText = {
+                    if (descriptionError) Text("La descripcion no puede estar vacia")
+                }
             )
 
-            // boton para guardar o actualizar la tarea
             Button(
                 onClick = {
                     keyboardController?.hide()
@@ -108,7 +116,7 @@ fun FormScreen(navController: NavController) {
                     titleError = title.isBlank()
                     descriptionError = description.isBlank()
 
-                    // si algun campo esta vacio mostramos el snackbar de error
+                    // si algun campo esta vacio mostramos el snackbar
                     if (titleError || descriptionError) {
                         scope.launch {
                             snackbarHostState.showSnackbar("Completa todos los campos")
@@ -124,13 +132,13 @@ fun FormScreen(navController: NavController) {
                     )
 
                     if (existingTask != null) {
-                        // si estamos editando reemplazamos la tarea en la lista
+                        // reemplazamos la tarea en la lista
                         val index = TaskRepository.tasks.indexOf(existingTask)
                         if (index != -1) {
                             TaskRepository.tasks[index] = newTask
                         }
                     } else {
-                        // si es nueva la añadimos al repositorio
+                        // añadimos la tarea nueva al repositorio
                         TaskRepository.tasks.add(newTask)
                     }
 
@@ -141,7 +149,6 @@ fun FormScreen(navController: NavController) {
                     }
                 },
                 modifier = Modifier.fillMaxWidth(),
-                // boton negro con texto blanco igual que el resto de botones
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.primary,
                     contentColor = MaterialTheme.colorScheme.onPrimary

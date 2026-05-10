@@ -9,10 +9,12 @@ import androidx.navigation.NavController
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Alignment
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CheckCircle
 import com.ximena.trabajorecuperaciont1_ra2_pmdm.components.TaskCard
 import com.ximena.trabajorecuperaciont1_ra2_pmdm.data.TaskRepository
 
-// pantalla principal que muestra la lista de tareas
+// pantalla principal con la lista de tareas
 @Composable
 fun HomeScreen(navController: NavController) {
 
@@ -33,21 +35,33 @@ fun HomeScreen(navController: NavController) {
 
         if (tasks.isEmpty()) {
 
-            // si no hay tareas mostramos un mensaje en el centro
+            // si no hay tareas mostramos un icono y un mensaje centrado en la pantalla
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
-                Text(
-                    text = "No hay tareas todavia",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.CheckCircle,
+                        contentDescription = null,
+                        modifier = Modifier.size(48.dp),
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    Text(
+                        text = "No hay tareas todavia",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
             }
 
         } else {
 
-            // lista de tareas con scroll
+            // lista con scroll que muestra todas las tareas
+            // contentPadding evita que el FAB tape la ultima tarea
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(12.dp),
                 contentPadding = PaddingValues(bottom = 80.dp)
@@ -57,14 +71,12 @@ fun HomeScreen(navController: NavController) {
                     TaskCard(
                         task = task,
                         navController = navController,
-                        // eliminamos la tarea de la lista
                         onDelete = { TaskRepository.tasks.remove(task) },
-                        // guardamos la tarea seleccionada y navegamos al formulario
                         onEdit = {
                             TaskRepository.selectedTask = task
                             navController.navigate("form")
                         },
-                        // cambiamos el estado de completada/pendiente
+                        // invertimos el estado actual de la tarea
                         onToggleComplete = {
                             val index = TaskRepository.tasks.indexOf(task)
                             if (index != -1) {

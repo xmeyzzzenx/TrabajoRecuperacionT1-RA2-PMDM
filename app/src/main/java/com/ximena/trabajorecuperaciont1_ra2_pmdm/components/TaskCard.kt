@@ -16,8 +16,7 @@ import com.ximena.trabajorecuperaciont1_ra2_pmdm.model.Task
 import com.ximena.trabajorecuperaciont1_ra2_pmdm.data.TaskRepository
 import com.ximena.trabajorecuperaciont1_ra2_pmdm.ui.theme.RedStrike
 
-// tarjeta que muestra una tarea en la lista
-// recibe la tarea, el navController y las acciones de borrar, editar y completar
+// tarjeta que muestra una tarea en la lista principal
 @Composable
 fun TaskCard(
     task: Task,
@@ -27,14 +26,13 @@ fun TaskCard(
     onToggleComplete: () -> Unit
 ) {
 
-    // usamos OutlinedCard para que tenga borde y se distinga del fondo blanco
+    // card con borde gris suave para distinguirla del fondo blanco
     OutlinedCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 8.dp, vertical = 6.dp),
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f)),
         colors = CardDefaults.cardColors(
-            // la card siempre es gris claro, el estado se ve en el tachado
             containerColor = MaterialTheme.colorScheme.secondary
         )
     ) {
@@ -43,20 +41,20 @@ fun TaskCard(
             modifier = Modifier.padding(16.dp)
         ) {
 
-            // fila superior con el titulo y la X para eliminar
+            // titulo con la X para eliminar a la derecha
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
 
+                // titulo tachado en rojo vino si esta completada
                 Text(
                     text = task.title,
                     style = MaterialTheme.typography.titleLarge,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                     modifier = Modifier.weight(1f),
-                    // si esta completada tachamos el titulo en rojo
                     textDecoration = if (task.isCompleted)
                         TextDecoration.LineThrough
                     else
@@ -67,7 +65,6 @@ fun TaskCard(
                         MaterialTheme.colorScheme.onSurface
                 )
 
-                // boton X para eliminar la tarea
                 IconButton(onClick = onDelete) {
                     Icon(
                         imageVector = Icons.Default.Close,
@@ -79,7 +76,7 @@ fun TaskCard(
 
             Spacer(modifier = Modifier.height(6.dp))
 
-            // si esta completada tachamos la descripcion en rojo
+            // descripcion tachada en rojo vino si esta completada
             Text(
                 text = task.description,
                 style = MaterialTheme.typography.bodyLarge,
@@ -103,7 +100,7 @@ fun TaskCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
 
-                // boton para ver el detalle de la tarea
+                // navega al detalle de la tarea
                 OutlinedButton(
                     onClick = {
                         TaskRepository.selectedTask = task
@@ -117,7 +114,7 @@ fun TaskCard(
                     Text("Ver")
                 }
 
-                // boton para editar la tarea
+                // navega al formulario con los datos cargados
                 OutlinedButton(
                     onClick = onEdit,
                     border = BorderStroke(2.dp, MaterialTheme.colorScheme.onSurface),
@@ -128,7 +125,7 @@ fun TaskCard(
                     Text("Editar")
                 }
 
-                // textbutton para alternar entre completada y pendiente
+                // alterna el estado entre completada y pendiente
                 TextButton(
                     onClick = onToggleComplete,
                     colors = ButtonDefaults.textButtonColors(
