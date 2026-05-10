@@ -14,8 +14,7 @@ import androidx.compose.material.icons.filled.Close
 import androidx.navigation.NavController
 import com.ximena.trabajorecuperaciont1_ra2_pmdm.model.Task
 import com.ximena.trabajorecuperaciont1_ra2_pmdm.data.TaskRepository
-import com.ximena.trabajorecuperaciont1_ra2_pmdm.ui.theme.GreenPastel
-import com.ximena.trabajorecuperaciont1_ra2_pmdm.ui.theme.RedPastel
+import com.ximena.trabajorecuperaciont1_ra2_pmdm.ui.theme.RedStrike
 
 // tarjeta que muestra una tarea en la lista
 // recibe la tarea, el navController y las acciones de borrar, editar y completar
@@ -28,14 +27,15 @@ fun TaskCard(
     onToggleComplete: () -> Unit
 ) {
 
-    ElevatedCard(
+    // usamos OutlinedCard para que tenga borde y se distinga del fondo blanco
+    OutlinedCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 8.dp, vertical = 6.dp),
-        elevation = CardDefaults.cardElevation(3.dp),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f)),
         colors = CardDefaults.cardColors(
-            // verde pastel si esta completada, rojo pastel si esta pendiente
-            containerColor = if (task.isCompleted) GreenPastel else RedPastel
+            // la card siempre es gris claro, el estado se ve en el tachado
+            containerColor = MaterialTheme.colorScheme.secondary
         )
     ) {
 
@@ -56,11 +56,15 @@ fun TaskCard(
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                     modifier = Modifier.weight(1f),
-                    // tachamos el titulo si la tarea esta completada
+                    // si esta completada tachamos el titulo en rojo
                     textDecoration = if (task.isCompleted)
                         TextDecoration.LineThrough
                     else
-                        TextDecoration.None
+                        TextDecoration.None,
+                    color = if (task.isCompleted)
+                        RedStrike
+                    else
+                        MaterialTheme.colorScheme.onSurface
                 )
 
                 // boton X para eliminar la tarea
@@ -75,11 +79,20 @@ fun TaskCard(
 
             Spacer(modifier = Modifier.height(6.dp))
 
+            // si esta completada tachamos la descripcion en rojo
             Text(
                 text = task.description,
                 style = MaterialTheme.typography.bodyLarge,
                 maxLines = 2,
-                overflow = TextOverflow.Ellipsis
+                overflow = TextOverflow.Ellipsis,
+                textDecoration = if (task.isCompleted)
+                    TextDecoration.LineThrough
+                else
+                    TextDecoration.None,
+                color = if (task.isCompleted)
+                    RedStrike
+                else
+                    MaterialTheme.colorScheme.onSurface
             )
 
             Spacer(modifier = Modifier.height(12.dp))
@@ -115,14 +128,14 @@ fun TaskCard(
                     Text("Editar")
                 }
 
-                // textbutton para marcar como completada o pendiente
+                // textbutton para alternar entre completada y pendiente
                 TextButton(
                     onClick = onToggleComplete,
                     colors = ButtonDefaults.textButtonColors(
                         contentColor = MaterialTheme.colorScheme.onSurface
                     )
                 ) {
-                    Text(if (task.isCompleted) "Pendiente" else "Completar")
+                    Text("Completar/Pendiente")
                 }
             }
         }
