@@ -11,6 +11,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.ui.text.style.TextAlign
 
+// pantalla de informacion sobre la app
 @Composable
 fun InfoScreen(navController: NavController) {
 
@@ -22,6 +23,7 @@ fun InfoScreen(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
+        // card con la informacion de la app
         Card(
             modifier = Modifier.fillMaxWidth(),
             elevation = CardDefaults.cardElevation(4.dp),
@@ -39,7 +41,7 @@ fun InfoScreen(navController: NavController) {
 
                 Icon(
                     imageVector = Icons.Default.Info,
-                    contentDescription = "Información",
+                    contentDescription = "Informacion",
                     modifier = Modifier.size(60.dp),
                     tint = MaterialTheme.colorScheme.primary
                 )
@@ -58,7 +60,7 @@ fun InfoScreen(navController: NavController) {
                 Spacer(modifier = Modifier.height(12.dp))
 
                 Text(
-                    text = "NoteApp es una aplicación para gestionar notas creada con Jetpack Compose.",
+                    text = "TaskApp es una aplicacion para gestionar tareas creada con Jetpack Compose.",
                     style = MaterialTheme.typography.bodyLarge,
                     textAlign = TextAlign.Center
                 )
@@ -66,7 +68,7 @@ fun InfoScreen(navController: NavController) {
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Text(
-                    text = "Permite crear, editar y eliminar notas de forma sencilla, ayudándote a organizar tus ideas en el día a día.",
+                    text = "Permite crear, editar, completar y eliminar tareas de forma sencilla, ayudandote a organizar tu dia a dia.",
                     style = MaterialTheme.typography.bodyMedium,
                     textAlign = TextAlign.Center
                 )
@@ -81,7 +83,7 @@ fun InfoScreen(navController: NavController) {
                 Spacer(modifier = Modifier.height(4.dp))
 
                 Text(
-                    text = "Versión 1.0",
+                    text = "Version 1.0",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
