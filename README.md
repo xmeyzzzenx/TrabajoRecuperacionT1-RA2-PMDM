@@ -1,45 +1,55 @@
-# Trabajo Recuperación RA2 - PMDM
+# TrabajoRecuperacionT1-RA2-PMDM
+## Autora: Ximena Meyzen Calderon - 2DAM - PMDM
 
-## Descripción
+---
 
-Este proyecto consiste en una aplicación móvil desarrollada en Kotlin con Jetpack Compose para gestionar notas.
+## Descripcion
+
+App Android desarrollada en Kotlin con Jetpack Compose para gestionar tareas.
+Permite crear, editar, completar y eliminar tareas de forma sencilla,
+con una interfaz limpia siguiendo Material Design 3.
 
 ---
 
 ## Objetivo
 
-El objetivo del proyecto es poner en práctica los conceptos de Jetpack Compose y desarrollar una aplicación funcional en Android.
+Poner en practica los conceptos de Jetpack Compose desarrollando una app
+funcional en Android con navegacion, formularios, validacion y componentes
+de Material Design 3.
 
 ---
 
-## Qué incluye la aplicación
+## Que incluye la app
 
-La aplicación permite realizar las siguientes acciones:
+### Gestion de tareas
 
-### Gestión de notas
+- Crear tareas con titulo y descripcion
+- Editar tareas existentes
+- Eliminar tareas con el boton X
+- Marcar tareas como completadas o pendientes
+- Ver el detalle de cada tarea
 
-- Crear notas
-- Editar notas
-- Eliminar notas
-- Ver el detalle de cada nota
+### Interfaz y navegacion
 
-### Interfaz y navegación
-
-- Navegación con Bottom Navigation
+- Bottom Navigation con tres secciones
 - Navigation Drawer lateral
-- Pantalla de formulario con validación
-- Pantalla de información de la app
+- Formulario con validacion y Snackbar de error
+- Pantalla de detalle de tarea
+- Pantalla de informacion de la app
 
 ### Componentes utilizados
 
-- Cards para mostrar notas
-- Botones (Button, OutlinedButton, TextButton)
-- FloatingActionButton (FAB)
-- Snackbar para notificaciones
+- OutlinedCard para mostrar las tareas con borde gris
+- Button para guardar y actualizar tareas
+- OutlinedButton para Ver y Editar
+- TextButton para Completar/Pendiente
+- FloatingActionButton para añadir tarea nueva
+- Snackbar cuando los campos del formulario estan vacios
+- IconButton para eliminar tarea y abrir el drawer
 
 ---
 
-## Tecnologías utilizadas
+## Tecnologias utilizadas
 
 - Kotlin
 - Jetpack Compose
@@ -48,23 +58,23 @@ La aplicación permite realizar las siguientes acciones:
 
 ---
 
-## Cómo ejecutar la aplicación
+## Como ejecutar la app
 
 1. Abrir el proyecto en Android Studio
-2. Ejecutar la aplicación en un emulador o dispositivo físico
+2. Ejecutar en un emulador o dispositivo fisico
 
 ---
 
 ## Estructura del proyecto
 
 ```
-TrabajoRecuperacionT1_RA2_PMMD/
+TrabajoRecuperacionT1-RA2-PMDM/
 ├── components/
-│   └── NoteCard.kt
+│   └── TaskCard.kt
 ├── data/
-│   └── NoteRepository.kt
+│   └── TaskRepository.kt
 ├── model/
-│   └── Note.kt
+│   └── Task.kt
 ├── navigation/
 │   └── NavGraph.kt
 ├── screens/
@@ -72,13 +82,21 @@ TrabajoRecuperacionT1_RA2_PMMD/
 │   ├── FormScreen.kt
 │   ├── DetailScreen.kt
 │   └── InfoScreen.kt
-├── ui.theme/
+├── ui/theme/
 │   ├── Color.kt
 │   ├── Theme.kt
 │   └── Type.kt
 └── MainActivity.kt
 ```
 
-## Autor
+---
 
-Ximena Meyzen Calderón
+## Repositorio
+
+https://github.com/xmeyzzzenx/TrabajoRecuperacionT1-RA2-PMDM
+
+---
+
+## Autora
+
+Ximena Meyzen Calderon
