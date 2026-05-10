@@ -6,15 +6,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.foundation.layout.*
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.navigation.NavController
-import com.ximena.trabajorecuperaciont1_ra2_pmdm.model.Note
+import com.ximena.trabajorecuperaciont1_ra2_pmdm.model.Task
 import com.ximena.trabajorecuperaciont1_ra2_pmdm.data.NoteRepository
 
 @Composable
 fun NoteCard(
-    note: Note,
+    note: Task,
     navController: NavController,
     onDelete: () -> Unit,
     onEdit: () -> Unit

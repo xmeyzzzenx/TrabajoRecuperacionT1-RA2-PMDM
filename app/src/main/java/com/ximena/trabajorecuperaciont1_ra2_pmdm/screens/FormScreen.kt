@@ -14,7 +14,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Warning
 import com.ximena.trabajorecuperaciont1_ra2_pmdm.data.NoteRepository
-import com.ximena.trabajorecuperaciont1_ra2_pmdm.model.Note
+import com.ximena.trabajorecuperaciont1_ra2_pmdm.model.Task
 
 @Composable
 fun FormScreen(navController: NavController) {
@@ -108,7 +108,7 @@ fun FormScreen(navController: NavController) {
                         return@Button
                     }
 
-                    val newNote = Note(title, description)
+                    val newNote = Task(title, description)
 
                     if (existingNote != null) {
                         val index = NoteRepository.notes.indexOf(existingNote)
