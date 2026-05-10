@@ -9,13 +9,14 @@ import androidx.navigation.NavController
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Alignment
-import com.ximena.trabajorecuperaciont1_ra2_pmdm.components.NoteCard
-import com.ximena.trabajorecuperaciont1_ra2_pmdm.data.NoteRepository
+import com.ximena.trabajorecuperaciont1_ra2_pmdm.components.TaskCard
+import com.ximena.trabajorecuperaciont1_ra2_pmdm.data.TaskRepository
 
+// pantalla principal que muestra la lista de tareas
 @Composable
 fun HomeScreen(navController: NavController) {
 
-    val notes = NoteRepository.notes
+    val tasks = TaskRepository.tasks
 
     Column(
         modifier = Modifier
@@ -24,20 +25,21 @@ fun HomeScreen(navController: NavController) {
     ) {
 
         Text(
-            text = "Mis notas",
+            text = "Mis tareas",
             style = MaterialTheme.typography.titleLarge
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        if (notes.isEmpty()) {
+        if (tasks.isEmpty()) {
 
+            // si no hay tareas mostramos un mensaje en el centro
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "No hay notas todavía",
+                    text = "No hay tareas todavia",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -45,19 +47,31 @@ fun HomeScreen(navController: NavController) {
 
         } else {
 
+            // lista de tareas con scroll
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(12.dp),
                 contentPadding = PaddingValues(bottom = 80.dp)
             ) {
-                items(notes) { note ->
+                items(tasks) { task ->
 
-                    NoteCard(
-                        note = note,
+                    TaskCard(
+                        task = task,
                         navController = navController,
-                        onDelete = { NoteRepository.notes.remove(note) },
+                        // eliminamos la tarea de la lista
+                        onDelete = { TaskRepository.tasks.remove(task) },
+                        // guardamos la tarea seleccionada y navegamos al formulario
                         onEdit = {
-                            NoteRepository.selectedNote = note
+                            TaskRepository.selectedTask = task
                             navController.navigate("form")
+                        },
+                        // cambiamos el estado de completada/pendiente
+                        onToggleComplete = {
+                            val index = TaskRepository.tasks.indexOf(task)
+                            if (index != -1) {
+                                TaskRepository.tasks[index] = task.copy(
+                                    isCompleted = !task.isCompleted
+                                )
+                            }
                         }
                     )
                 }
