@@ -7,16 +7,20 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.navigation.NavController
 import com.ximena.trabajorecuperaciont1_ra2_pmdm.model.Task
-import com.ximena.trabajorecuperaciont1_ra2_pmdm.data.NoteRepository
+import com.ximena.trabajorecuperaciont1_ra2_pmdm.data.TaskRepository
 
+// tarjeta que muestra una tarea en la lista
+// recibe la tarea, el navController y las acciones de borrar, editar y completar
 @Composable
-fun NoteCard(
-    note: Task,
+fun TaskCard(
+    task: Task,
     navController: NavController,
     onDelete: () -> Unit,
-    onEdit: () -> Unit
+    onEdit: () -> Unit,
+    onToggleComplete: () -> Unit
 ) {
 
     ElevatedCard(
@@ -25,7 +29,11 @@ fun NoteCard(
             .padding(horizontal = 8.dp, vertical = 6.dp),
         elevation = CardDefaults.cardElevation(3.dp),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.secondary
+            // si la tarea esta completada la ponemos con otro color para distinguirla
+            containerColor = if (task.isCompleted)
+                MaterialTheme.colorScheme.surfaceVariant
+            else
+                MaterialTheme.colorScheme.secondary
         )
     ) {
 
@@ -34,16 +42,21 @@ fun NoteCard(
         ) {
 
             Text(
-                text = note.title,
+                text = task.title,
                 style = MaterialTheme.typography.titleLarge,
                 maxLines = 1,
-                overflow = TextOverflow.Ellipsis
+                overflow = TextOverflow.Ellipsis,
+                // si esta completada tachamos el titulo
+                textDecoration = if (task.isCompleted)
+                    TextDecoration.LineThrough
+                else
+                    TextDecoration.None
             )
 
             Spacer(modifier = Modifier.height(6.dp))
 
             Text(
-                text = note.description,
+                text = task.description,
                 style = MaterialTheme.typography.bodyLarge,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis
@@ -56,9 +69,10 @@ fun NoteCard(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
 
+                // boton para ver el detalle de la tarea
                 OutlinedButton(
                     onClick = {
-                        NoteRepository.selectedNote = note
+                        TaskRepository.selectedTask = task
                         navController.navigate("detail")
                     },
                     border = BorderStroke(
@@ -72,6 +86,7 @@ fun NoteCard(
                     Text("Ver")
                 }
 
+                // boton para editar la tarea
                 OutlinedButton(
                     onClick = onEdit,
                     border = BorderStroke(
@@ -85,6 +100,20 @@ fun NoteCard(
                     Text("Editar")
                 }
 
+                // boton para marcar la tarea como completada o pendiente
+                TextButton(
+                    onClick = onToggleComplete,
+                    colors = ButtonDefaults.textButtonColors(
+                        contentColor = if (task.isCompleted)
+                            MaterialTheme.colorScheme.primary
+                        else
+                            MaterialTheme.colorScheme.tertiary
+                    )
+                ) {
+                    Text(if (task.isCompleted) "Pendiente" else "Completar")
+                }
+
+                // boton para eliminar la tarea
                 TextButton(
                     onClick = onDelete,
                     colors = ButtonDefaults.textButtonColors(
