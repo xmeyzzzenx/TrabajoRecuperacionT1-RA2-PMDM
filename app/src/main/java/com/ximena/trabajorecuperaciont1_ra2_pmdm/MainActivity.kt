@@ -9,6 +9,8 @@ import androidx.compose.material3.Surface
 import com.ximena.trabajorecuperaciont1_ra2_pmdm.navigation.NavGraph
 import com.ximena.trabajorecuperaciont1_ra2_pmdm.ui.theme.TrabajoRecuperacionT1RA2PMDMTheme
 
+// actividad principal, punto de entrada de la app
+// aqui aplicamos el tema y lanzamos la navegacion
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
