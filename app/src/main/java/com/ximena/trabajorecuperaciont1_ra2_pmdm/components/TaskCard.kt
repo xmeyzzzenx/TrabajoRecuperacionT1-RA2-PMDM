@@ -3,14 +3,19 @@ package com.ximena.trabajorecuperaciont1_ra2_pmdm.components
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.Alignment
 import androidx.compose.foundation.layout.*
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.navigation.NavController
 import com.ximena.trabajorecuperaciont1_ra2_pmdm.model.Task
 import com.ximena.trabajorecuperaciont1_ra2_pmdm.data.TaskRepository
+import com.ximena.trabajorecuperaciont1_ra2_pmdm.ui.theme.GreenPastel
+import com.ximena.trabajorecuperaciont1_ra2_pmdm.ui.theme.RedPastel
 
 // tarjeta que muestra una tarea en la lista
 // recibe la tarea, el navController y las acciones de borrar, editar y completar
@@ -29,11 +34,8 @@ fun TaskCard(
             .padding(horizontal = 8.dp, vertical = 6.dp),
         elevation = CardDefaults.cardElevation(3.dp),
         colors = CardDefaults.cardColors(
-            // si la tarea esta completada la ponemos con otro color para distinguirla
-            containerColor = if (task.isCompleted)
-                MaterialTheme.colorScheme.surfaceVariant
-            else
-                MaterialTheme.colorScheme.secondary
+            // verde pastel si esta completada, rojo pastel si esta pendiente
+            containerColor = if (task.isCompleted) GreenPastel else RedPastel
         )
     ) {
 
@@ -41,17 +43,35 @@ fun TaskCard(
             modifier = Modifier.padding(16.dp)
         ) {
 
-            Text(
-                text = task.title,
-                style = MaterialTheme.typography.titleLarge,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                // si esta completada tachamos el titulo
-                textDecoration = if (task.isCompleted)
-                    TextDecoration.LineThrough
-                else
-                    TextDecoration.None
-            )
+            // fila superior con el titulo y la X para eliminar
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+
+                Text(
+                    text = task.title,
+                    style = MaterialTheme.typography.titleLarge,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.weight(1f),
+                    // tachamos el titulo si la tarea esta completada
+                    textDecoration = if (task.isCompleted)
+                        TextDecoration.LineThrough
+                    else
+                        TextDecoration.None
+                )
+
+                // boton X para eliminar la tarea
+                IconButton(onClick = onDelete) {
+                    Icon(
+                        imageVector = Icons.Default.Close,
+                        contentDescription = "Eliminar tarea",
+                        tint = MaterialTheme.colorScheme.onSurface
+                    )
+                }
+            }
 
             Spacer(modifier = Modifier.height(6.dp))
 
@@ -66,7 +86,8 @@ fun TaskCard(
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
 
                 // boton para ver el detalle de la tarea
@@ -75,10 +96,7 @@ fun TaskCard(
                         TaskRepository.selectedTask = task
                         navController.navigate("detail")
                     },
-                    border = BorderStroke(
-                        2.dp,
-                        MaterialTheme.colorScheme.onSurface
-                    ),
+                    border = BorderStroke(2.dp, MaterialTheme.colorScheme.onSurface),
                     colors = ButtonDefaults.outlinedButtonColors(
                         contentColor = MaterialTheme.colorScheme.onSurface
                     )
@@ -89,10 +107,7 @@ fun TaskCard(
                 // boton para editar la tarea
                 OutlinedButton(
                     onClick = onEdit,
-                    border = BorderStroke(
-                        2.dp,
-                        MaterialTheme.colorScheme.onSurface
-                    ),
+                    border = BorderStroke(2.dp, MaterialTheme.colorScheme.onSurface),
                     colors = ButtonDefaults.outlinedButtonColors(
                         contentColor = MaterialTheme.colorScheme.onSurface
                     )
@@ -100,27 +115,14 @@ fun TaskCard(
                     Text("Editar")
                 }
 
-                // boton para marcar la tarea como completada o pendiente
+                // textbutton para marcar como completada o pendiente
                 TextButton(
                     onClick = onToggleComplete,
                     colors = ButtonDefaults.textButtonColors(
-                        contentColor = if (task.isCompleted)
-                            MaterialTheme.colorScheme.primary
-                        else
-                            MaterialTheme.colorScheme.tertiary
+                        contentColor = MaterialTheme.colorScheme.onSurface
                     )
                 ) {
                     Text(if (task.isCompleted) "Pendiente" else "Completar")
-                }
-
-                // boton para eliminar la tarea
-                TextButton(
-                    onClick = onDelete,
-                    colors = ButtonDefaults.textButtonColors(
-                        contentColor = MaterialTheme.colorScheme.error
-                    )
-                ) {
-                    Text("Eliminar")
                 }
             }
         }

@@ -100,6 +100,7 @@ fun FormScreen(navController: NavController) {
                 modifier = Modifier.fillMaxWidth()
             )
 
+            // boton para guardar o actualizar la tarea
             Button(
                 onClick = {
                     keyboardController?.hide()
@@ -140,8 +141,10 @@ fun FormScreen(navController: NavController) {
                     }
                 },
                 modifier = Modifier.fillMaxWidth(),
+                // boton negro con texto blanco igual que el resto de botones
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.secondaryContainer
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.onPrimary
                 )
             ) {
                 Text(if (existingTask != null) "Actualizar" else "Guardar")

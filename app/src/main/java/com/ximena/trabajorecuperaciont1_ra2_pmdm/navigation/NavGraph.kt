@@ -23,7 +23,7 @@ fun NavGraph() {
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
-    // colores del indicador de la bottom bar
+    // indicador de la bottom bar en gris medio
     val navItemColors = NavigationBarItemDefaults.colors(
         indicatorColor = MaterialTheme.colorScheme.secondaryContainer
     )
@@ -40,7 +40,10 @@ fun NavGraph() {
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
-            ModalDrawerSheet {
+            // forzamos el fondo blanco para que no salga el morado del tema por defecto
+            ModalDrawerSheet(
+                drawerContainerColor = MaterialTheme.colorScheme.background
+            ) {
 
                 Text(
                     text = "Menu",
@@ -100,8 +103,10 @@ fun NavGraph() {
             },
 
             bottomBar = {
-                // barra de navegacion inferior con las tres secciones principales
-                NavigationBar {
+                // forzamos el fondo blanco para que no salga el morado del tema por defecto
+                NavigationBar(
+                    containerColor = MaterialTheme.colorScheme.background
+                ) {
 
                     NavigationBarItem(
                         selected = currentRoute == "home",
@@ -127,11 +132,12 @@ fun NavGraph() {
             },
 
             floatingActionButton = {
-                // boton flotante para añadir tarea, solo visible en la pantalla principal
+                // boton flotante negro para añadir tarea, solo visible en la pantalla principal
                 if (currentRoute == "home") {
                     FloatingActionButton(
                         onClick = { navigate("form") },
-                        containerColor = MaterialTheme.colorScheme.secondaryContainer
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        contentColor = MaterialTheme.colorScheme.onPrimary
                     ) {
                         Icon(Icons.Default.Add, contentDescription = "Añadir tarea")
                     }

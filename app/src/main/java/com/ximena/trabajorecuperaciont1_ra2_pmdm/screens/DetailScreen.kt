@@ -10,6 +10,8 @@ import androidx.navigation.NavController
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import com.ximena.trabajorecuperaciont1_ra2_pmdm.data.TaskRepository
+import com.ximena.trabajorecuperaciont1_ra2_pmdm.ui.theme.GreenPastel
+import com.ximena.trabajorecuperaciont1_ra2_pmdm.ui.theme.RedPastel
 
 // pantalla de detalle que muestra toda la informacion de una tarea
 @OptIn(ExperimentalMaterial3Api::class)
@@ -61,15 +63,17 @@ fun DetailScreen(navController: NavController) {
                 style = MaterialTheme.typography.bodyLarge
             )
 
-            // etiqueta que muestra el estado de la tarea
-            Text(
-                text = if (task?.isCompleted == true) "Estado: Completada" else "Estado: Pendiente",
-                style = MaterialTheme.typography.bodyMedium,
-                color = if (task?.isCompleted == true)
-                    MaterialTheme.colorScheme.primary
-                else
-                    MaterialTheme.colorScheme.onSurfaceVariant
-            )
+            // etiqueta de estado con fondo de color segun si esta completada o pendiente
+            Surface(
+                shape = MaterialTheme.shapes.small,
+                color = if (task?.isCompleted == true) GreenPastel else RedPastel
+            ) {
+                Text(
+                    text = if (task?.isCompleted == true) "Completada" else "Pendiente",
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp)
+                )
+            }
         }
     }
 }
